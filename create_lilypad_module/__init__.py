@@ -1,10 +1,11 @@
 #!/usr/bin/env python3
 
-import os
-import sys
-import subprocess
 import json
+import os
 import re
+import shutil
+import subprocess
+import sys
 
 
 def initialize_git_repo(target_dir):
@@ -63,10 +64,14 @@ def clone_template_repo(template_repo_url, target_dir):
         subprocess.run(["git", "clone", template_repo_url, target_dir], check=True)
         print(f"Template cloned successfully into '{target_dir}'.")
 
-        pyproject_path = os.path.join(target_dir, "pyproject.toml")
+        pyproject_file = os.path.join(target_dir, "pyproject.toml")
 
-        if os.path.exists(pyproject_path):
-            os.remove(pyproject_path)
+        if os.path.exists(pyproject_file):
+            os.remove(pyproject_file)
+
+        package_dir = os.path.join(target_dir, "create_lilypad_module")
+        if os.path.exists(package_dir):
+            shutil.rmtree(package_dir)
     except subprocess.CalledProcessError as e:
         print(f"Error: Failed to clone repository. {e}")
         sys.exit(1)
