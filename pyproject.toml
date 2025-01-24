@@ -1,6 +1,6 @@
 [project]
 name = "create_lilypad_module"
-version = "0.1.14"
+version = "0.1.15"
 description = "A CLI tool to quickly scaffold and initialize new Lilypad module projects with boilerplate code and configuration."
 readme = "README.md"
 keywords = [
