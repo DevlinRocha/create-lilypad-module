@@ -9,7 +9,7 @@ import subprocess
 import sys
 from pathlib import Path
 
-TEMPLATES_DIR = Path(__file__).resolve().parent.parent / "templates"
+TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
 
 
 def initialize_git_repo(target_dir: Path) -> None:
