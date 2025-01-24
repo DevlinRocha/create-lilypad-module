@@ -2,7 +2,6 @@ import os
 import sys
 import traceback
 import json
-from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
 
 def run_job(input, model, tokenizer):
@@ -36,8 +35,8 @@ def main():
     output = {"input": input, "status": "error"}
 
     try:
-        tokenizer = AutoTokenizer.from_pretrained(model_directory)
-        model = AutoModelForSeq2SeqLM.from_pretrained(model_directory)
+        # tokenizer = AutoTokenizer.from_pretrained(model_directory)
+        # model = AutoModelForSeq2SeqLM.from_pretrained(model_directory)
 
         output = run_job(input, model, tokenizer)
         output.update(

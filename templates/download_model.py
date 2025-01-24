@@ -1,4 +1,3 @@
-from transformers import AutoTokenizer, AutoModelForSequenceClassification
 from constants import MODEL_NAME
 
 
