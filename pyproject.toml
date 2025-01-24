@@ -1,5 +1,44 @@
 [project]
 name = "create_lilypad_module"
-version = "0.1.13"
+version = "0.1.14"
+description = "A CLI tool to quickly scaffold and initialize new Lilypad module projects with boilerplate code and configuration."
+readme = "README.md"
+keywords = [
+    "Lilypad",
+    "Lilypad Network",
+    "Lilypad module",
+    "module-generator",
+    "project-generator",
+    "boilerplate-generator",
+    "scaffolding-tool",
+    "project scaffolding",
+    "CLI",
+]
+authors = [
+    {name = "Devlin Rocha", email = "devlin@devlinrocha.com"}
+]
+maintainers = [
+    {name = "Devlin Rocha", email = "devlin@devlinrocha.com"}
+]
+classifiers = [
+    "Development Status :: 4 - Beta",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.9",
+    "Topic :: Software Development :: Code Generators",
+    "Topic :: Software Development :: Libraries :: Python Modules"
+]
+
+dependencies = []
+
+requires-python = ">=3.8"
+
+[project.urls]
+Homepage = "https://github.com/DevlinRocha/create-lilypad-module"
+Bug Tracker = "https://github.com/DevlinRocha/create-lilypad-module/issues"
+Documentation = "https://github.com/DevlinRocha/create-lilypad-module#readme"
+Source = "https://github.com/DevlinRocha/create-lilypad-module"
+
 [project.scripts]
 create-lilypad-module = "create_lilypad_module:main"
