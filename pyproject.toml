@@ -27,16 +27,14 @@ classifiers = [
     "Programming Language :: Python :: 3",
     "Programming Language :: Python :: 3.9",
     "Topic :: Software Development :: Code Generators",
-    "Topic :: Software Development :: Libraries :: Python Modules"
+    "Topic :: Software Development :: Libraries :: Python Modules",
 ]
-
-dependencies = []
 
 requires-python = ">=3.8"
 
 [project.urls]
 Homepage = "https://github.com/DevlinRocha/create-lilypad-module"
-Bug Tracker = "https://github.com/DevlinRocha/create-lilypad-module/issues"
+"Bug Tracker" = "https://github.com/DevlinRocha/create-lilypad-module/issues"
 Documentation = "https://github.com/DevlinRocha/create-lilypad-module#readme"
 Source = "https://github.com/DevlinRocha/create-lilypad-module"
 
