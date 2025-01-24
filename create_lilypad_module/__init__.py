@@ -65,13 +65,16 @@ def clone_template_repo(template_repo_url, target_dir):
         print(f"Template cloned successfully into '{target_dir}'.")
 
         pyproject_file = os.path.join(target_dir, "pyproject.toml")
-
         if os.path.exists(pyproject_file):
             os.remove(pyproject_file)
 
         package_dir = os.path.join(target_dir, "create_lilypad_module")
         if os.path.exists(package_dir):
             shutil.rmtree(package_dir)
+
+        github_dir = os.path.join(target_dir, ".github")
+        if os.path.exists(github_dir):
+            shutil.rmtree(github_dir)
     except subprocess.CalledProcessError as e:
         print(f"Error: Failed to clone repository. {e}")
         sys.exit(1)
