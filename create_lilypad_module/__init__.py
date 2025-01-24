@@ -62,6 +62,11 @@ def clone_template_repo(template_repo_url, target_dir):
         print(f"Cloning {template_repo_url} into {target_dir}...")
         subprocess.run(["git", "clone", template_repo_url, target_dir], check=True)
         print(f"Template cloned successfully into '{target_dir}'.")
+
+        pyproject_path = os.path.join(target_dir, "pyproject.toml")
+
+        if os.path.exists(pyproject_path):
+            os.remove(pyproject_path)
     except subprocess.CalledProcessError as e:
         print(f"Error: Failed to clone repository. {e}")
         sys.exit(1)
