@@ -1,5 +1,5 @@
 [project]
 name = "create_lilypad_module"
-version = "0.1.11"
+version = "0.1.12"
 [project.scripts]
 create-lilypad-module = "create_lilypad_module:main"
