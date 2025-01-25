@@ -114,7 +114,7 @@ def scaffold_project(project_name: str, github_username: str) -> None:
     try:
         target_dir.mkdir(parents=True, exist_ok=True)
         print(
-            f"Creating a new Lilypad module in: {Path(__file__).resolve().parent}/{project_name}"
+            f"\nCreating a new Lilypad module in: {Path(__file__).resolve().parent}/{project_name}\n"
         )
 
         copy_templates(target_dir)
@@ -130,9 +130,9 @@ def scaffold_project(project_name: str, github_username: str) -> None:
             print("Error: GitHub username could not be determined. Exiting.")
             sys.exit(1)
 
-        print(f"✅ Success! Created {project_name} at ~/{project_name}")
+        print(f"\n✅ Success! Created {project_name} at ~/{project_name}")
         print("\nOpen the project by typing:")
-        print(f"\ncd {project_name}")
+        print(f"\n\t\033[38;2;20;199;195mcd\033[0m {project_name}")
         print(f"\nGLHF!")
     except Exception as error:
         print(f"Error scaffolding project: {error}")
