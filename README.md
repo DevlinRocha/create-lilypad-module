@@ -7,7 +7,7 @@ Create Lilypad modules.
 
 Create Lilypad Module works on macOS, Windows, and Linux.
 
-If something doesn’t work, [please file an issue](https://github.com/DevlinRocha/create-lilypad-module/issues/new).
+If something doesn’t work, please [file an issue](https://github.com/DevlinRocha/create-lilypad-module/issues/new).
 
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/DevlinRocha/create-lilypad-module/discussions).
 
