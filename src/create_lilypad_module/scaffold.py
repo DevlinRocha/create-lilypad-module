@@ -10,8 +10,6 @@ import sys
 from pathlib import Path
 import importlib.resources as resources
 
-TEMPLATES_DIR = resources.path("create_lilypad_module", "templates")
-
 
 def initialize_git_repo(target_dir: Path) -> None:
     """
@@ -75,7 +73,7 @@ def get_github_username_from_remote(repo_path: Path) -> str:
 
 def copy_templates(target_dir: Path) -> None:
     """
-    Copies template files from the `TEMPLATES_DIR` to the specified target directory.
+    Copies template files from the `templates` directory to the specified target directory.
 
     Args:
         target_dir (Path): Path to the target directory where template files will be copied.
@@ -84,12 +82,13 @@ def copy_templates(target_dir: Path) -> None:
         OSError: If an error occurs during the file or directory copying process.
     """
     try:
-        for item in TEMPLATES_DIR.iterdir():
-            target_path = target_dir / item.name
-            if item.is_file():
-                shutil.copy(item, target_path)
-            elif item.is_dir():
-                shutil.copytree(item, target_path)
+        with resources.path("create_lilypad_module", "templates") as templates_dir:
+            for item in templates_dir.iterdir():
+                target_path = target_dir / item.name
+                if item.is_file():
+                    shutil.copy(item, target_path)
+                elif item.is_dir():
+                    shutil.copytree(item, target_path)
     except OSError as error:
         print(f"Error copying templates: {error}")
         sys.exit(1)
