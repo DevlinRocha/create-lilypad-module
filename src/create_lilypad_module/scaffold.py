@@ -8,7 +8,7 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
-import importlib.resources as resources
+from importlib.resources import files
 
 
 def initialize_git_repo(target_dir: Path) -> None:
@@ -40,13 +40,21 @@ def copy_templates(target_dir: Path) -> None:
         OSError: If an error occurs during the file or directory copying process.
     """
     try:
-        with resources.path("create_lilypad_module", "templates") as templates_dir:
-            for item in templates_dir.iterdir():
-                target_path = target_dir / item.name
-                if item.is_file():
-                    shutil.copy(item, target_path)
-                elif item.is_dir():
-                    shutil.copytree(item, target_path)
+        with files("create_lilypad_module").joinpath("templates") as templates_dir:
+            for root, dirs, files in os.walk(templates_dir):
+                dirs[:] = [d for d in dirs if d != "__pycache__"]
+
+                for file_name in files:
+                    if file_name.endswith(".pyc"):
+                        continue
+
+                    source_file = Path(root) / file_name
+                    relative_path = source_file.relative_to(templates_dir)
+                    destination_file = target_dir / relative_path
+
+                    destination_file.parent.mkdir(parents=True, exist_ok=True)
+                    shutil.copy(source_file, destination_file)
+
     except OSError as error:
         print(f"Error copying templates: {error}")
         sys.exit(1)
