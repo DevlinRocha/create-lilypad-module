@@ -24,7 +24,6 @@ def initialize_git_repo(target_dir: Path) -> None:
     try:
         os.chdir(target_dir)
         subprocess.run(["git", "init"], check=True)
-        print(f"Initialized empty Git repository in {target_dir}")
     except subprocess.CalledProcessError as error:
         print(f"Error: Failed to initialize Git repository. {error}")
         sys.exit(1)
@@ -91,7 +90,6 @@ def generate_module_config(github_repo: str, output_file: Path) -> None:
     try:
         with open(output_file, "w") as json_file:
             json.dump(config, json_file, indent=4)
-        print(f"Module configuration generated at {output_file}")
     except OSError as error:
         print(f"Error writing configuration file: {error}")
         sys.exit(1)
@@ -115,7 +113,9 @@ def scaffold_project(project_name: str, github_username: str) -> None:
 
     try:
         target_dir.mkdir(parents=True, exist_ok=True)
-        print(f"Scaffolding project: {project_name}")
+        print(
+            f"Creating a new Lilypad module in: {Path(__file__).resolve().parent}/{project_name}"
+        )
 
         copy_templates(target_dir)
         initialize_git_repo(target_dir)
@@ -129,6 +129,11 @@ def scaffold_project(project_name: str, github_username: str) -> None:
         else:
             print("Error: GitHub username could not be determined. Exiting.")
             sys.exit(1)
+
+        print(f"✅ Success! Created {project_name} at ~/{project_name}")
+        print("\nOpen the project by typing:")
+        print(f"\ncd {project_name}")
+        print(f"\nGLHF!")
     except Exception as error:
         print(f"Error scaffolding project: {error}")
         sys.exit(1)
@@ -164,7 +169,7 @@ def main() -> None:
     if not github_username:
         github_username = input("Enter your GitHub username: ").strip()
         if not github_username:
-            print("Error: GitHub username is required.")
+            print("Error: GitHub username is required")
             sys.exit(1)
 
     scaffold_project(project_name, github_username)
