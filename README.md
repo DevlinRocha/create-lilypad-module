@@ -42,11 +42,14 @@ Output:
 
 ```
 project_name
+├── config
+│   └── constants.py
+├── scripts
+│   ├── download_model.py
+│   └── run.py
+├── src
+│   └── run_inference.py
 ├── .gitignore
-├── constants.py
-├── download_model.py
 ├── lilypad_module.json.tmpl
 ├── README.md
-├── run_inference.py
-└── run.py
 ```
