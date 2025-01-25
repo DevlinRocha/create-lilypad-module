@@ -8,8 +8,9 @@ import shutil
 import subprocess
 import sys
 from pathlib import Path
+import importlib.resources as resources
 
-TEMPLATES_DIR = Path(__file__).resolve().parent / "templates"
+TEMPLATES_DIR = resources.path("create_lilypad_module", "templates")
 
 
 def initialize_git_repo(target_dir: Path) -> None:
@@ -45,7 +46,7 @@ def get_github_username_from_remote(repo_path: Path) -> str:
         SystemExit: If the specified path is not a valid Git repository or the username cannot be determined.
     """
     try:
-        if not (repo_path / ".git").is_dir():
+        if not os.path.isdir(os.path.join(repo_path, ".git")):
             raise ValueError(
                 f"The directory {repo_path} is not a valid Git repository."
             )
@@ -64,6 +65,9 @@ def get_github_username_from_remote(repo_path: Path) -> str:
             return match.group(1)
         else:
             raise ValueError("GitHub username not found in the remote URL.")
+    except subprocess.CalledProcessError as error:
+        print(f"Error running Git command: {error}")
+        sys.exit(1)
     except Exception as error:
         print(f"Error: {error}")
         sys.exit(1)
@@ -180,9 +184,18 @@ def main() -> None:
     parser.add_argument(
         "project_name",
         type=str,
+        nargs="?",
         help="Name of the new project.",
     )
     args = parser.parse_args()
+    project_name = args.project_name
+
+    if not project_name:
+        project_name = input(
+            "Enter the name of your new project (default: lilypad-module): "
+        ).strip()
+        if not project_name:
+            project_name = "lilypad-module"
 
     scaffold_project(args.project_name)
 
