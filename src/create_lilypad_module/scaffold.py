@@ -197,7 +197,7 @@ def main() -> None:
         if not project_name:
             project_name = "lilypad-module"
 
-    scaffold_project(args.project_name)
+    scaffold_project(project_name)
 
 
 if __name__ == "__main__":
