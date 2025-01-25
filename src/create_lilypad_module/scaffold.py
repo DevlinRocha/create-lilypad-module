@@ -61,11 +61,6 @@ def get_github_username_from_remote(repo_path: Path) -> str:
         else:
             raise ValueError("GitHub username not found in the remote URL.")
 
-    except subprocess.CalledProcessError:
-        print(
-            "Error: No remote named 'origin' found. Please configure your GitHub remote."
-        )
-        sys.exit(1)
     except Exception as error:
         print(f"Error: {error}")
         sys.exit(1)
