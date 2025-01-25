@@ -6,7 +6,9 @@ Create Lilypad modules.
 - [JS CLI Wrapper](https://docs.lilypad.tech/lilypad/developer-resources/js-cli-wrapper-local) – How to run the Lilypad CLI wrapper locally
 
 Create Lilypad Module works on macOS, Windows, and Linux.
+
 If something doesn’t work, [please file an issue](https://github.com/DevlinRocha/create-lilypad-module/issues/new).
+
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/DevlinRocha/create-lilypad-module/discussions).
 
 ## Quick Overview
