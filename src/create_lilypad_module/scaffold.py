@@ -30,45 +30,6 @@ def initialize_git_repo(target_dir: Path) -> None:
         sys.exit(1)
 
 
-def get_github_username_from_remote(repo_path: Path) -> str:
-    """
-    Extracts the GitHub username from the remote URL of a Git repository.
-
-    Args:
-        repo_path (Path): Path to the local Git repository.
-
-    Returns:
-        str: The GitHub username extracted from the remote URL.
-
-    Raises:
-        SystemExit: If the specified path is not a valid Git repository or the username cannot be determined.
-    """
-    try:
-        if not (repo_path / ".git").is_dir():
-            raise ValueError(
-                f"The directory {repo_path} is not a valid Git repository."
-            )
-
-        os.chdir(repo_path)
-        remote_url = (
-            subprocess.check_output(
-                ["git", "remote", "get-url", "origin"], stderr=subprocess.DEVNULL
-            )
-            .decode()
-            .strip()
-        )
-
-        match = re.search(r"github\.com[:/](.*?)/", remote_url)
-        if match:
-            return match.group(1)
-        else:
-            raise ValueError("GitHub username not found in the remote URL.")
-
-    except Exception as error:
-        print(f"Error: {error}")
-        sys.exit(1)
-
-
 def copy_templates(target_dir: Path) -> None:
     """
     Copies template files from the `templates` directory to the specified target directory.
@@ -136,7 +97,7 @@ def generate_module_config(github_repo: str, output_file: Path) -> None:
         sys.exit(1)
 
 
-def scaffold_project(project_name: str) -> None:
+def scaffold_project(project_name: str, github_username: str) -> None:
     """
     Scaffolds a new Lilypad module project in the specified directory.
 
@@ -159,7 +120,6 @@ def scaffold_project(project_name: str) -> None:
         copy_templates(target_dir)
         initialize_git_repo(target_dir)
 
-        github_username = get_github_username_from_remote(target_dir)
         if github_username:
             github_repo = f"github.com/{github_username}/{project_name}"
             generate_module_config(
@@ -184,8 +144,15 @@ def main() -> None:
         nargs="?",
         help="Name of the new project.",
     )
+    parser.add_argument(
+        "github_username",
+        type=str,
+        nargs="?",
+        help="GitHub username.",
+    )
     args = parser.parse_args()
     project_name = args.project_name
+    github_username = args.github_username
 
     if not project_name:
         project_name = input(
@@ -193,8 +160,13 @@ def main() -> None:
         ).strip()
         if not project_name:
             project_name = "lilypad-module"
+    if not github_username:
+        github_username = input("Enter your GitHub username: ").strip()
+        if not github_username:
+            print("Error: GitHub username is required.")
+            sys.exit(1)
 
-    scaffold_project(project_name)
+    scaffold_project(project_name, github_username)
 
 
 if __name__ == "__main__":
