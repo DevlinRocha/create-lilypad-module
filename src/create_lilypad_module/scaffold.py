@@ -3,7 +3,6 @@
 import argparse
 import json
 import os
-import re
 import shutil
 import subprocess
 import sys
@@ -41,10 +40,10 @@ def copy_templates(target_dir: Path) -> None:
     """
     try:
         with files("create_lilypad_module").joinpath("templates") as templates_dir:
-            for root, dirs, files in os.walk(templates_dir):
+            for root, dirs, file_list in os.walk(templates_dir):
                 dirs[:] = [d for d in dirs if d != "__pycache__"]
 
-                for file_name in files:
+                for file_name in file_list:
                     if file_name.endswith(".pyc"):
                         continue
 
@@ -54,7 +53,6 @@ def copy_templates(target_dir: Path) -> None:
 
                     destination_file.parent.mkdir(parents=True, exist_ok=True)
                     shutil.copy(source_file, destination_file)
-
     except OSError as error:
         print(f"Error copying templates: {error}")
         sys.exit(1)
