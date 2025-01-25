@@ -50,10 +50,13 @@ def get_github_username_from_remote(repo_path: Path) -> str:
             )
 
         os.chdir(repo_path)
-
-        remote_url = subprocess.check_output(
-            ["git", "remote", "get-url", "origin"], text=True, stderr=subprocess.DEVNULL
-        ).strip()
+        remote_url = (
+            subprocess.check_output(
+                ["git", "remote", "get-url", "origin"], stderr=subprocess.DEVNULL
+            )
+            .decode()
+            .strip()
+        )
 
         match = re.search(r"github\.com[:/](.*?)/", remote_url)
         if match:
