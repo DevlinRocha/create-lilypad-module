@@ -44,27 +44,27 @@ def get_github_username_from_remote(repo_path: Path) -> str:
         SystemExit: If the specified path is not a valid Git repository or the username cannot be determined.
     """
     try:
-        if not os.path.isdir(os.path.join(repo_path, ".git")):
+        if not (repo_path / ".git").is_dir():
             raise ValueError(
                 f"The directory {repo_path} is not a valid Git repository."
             )
 
         os.chdir(repo_path)
-        remote_url = (
-            subprocess.check_output(
-                ["git", "remote", "get-url", "origin"], stderr=subprocess.DEVNULL
-            )
-            .decode()
-            .strip()
-        )
+
+        remote_url = subprocess.check_output(
+            ["git", "remote", "get-url", "origin"], text=True
+        ).strip()
 
         match = re.search(r"github\.com[:/](.*?)/", remote_url)
         if match:
-            return match.group(1)
+            return match.group(1).split("/")[0]
         else:
             raise ValueError("GitHub username not found in the remote URL.")
-    except subprocess.CalledProcessError as error:
-        print(f"Error running Git command: {error}")
+
+    except subprocess.CalledProcessError:
+        print(
+            "Error: No remote named 'origin' found. Please configure your GitHub remote."
+        )
         sys.exit(1)
     except Exception as error:
         print(f"Error: {error}")
