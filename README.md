@@ -51,5 +51,5 @@ project_name
 │   └── run_inference.py
 ├── .gitignore
 ├── lilypad_module.json.tmpl
-├── README.md
+└── README.md
 ```
