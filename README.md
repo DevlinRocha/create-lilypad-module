@@ -19,7 +19,11 @@ To create a new Lilypad module, install our CLI tool:
 pip install create-lilypad-module
 ```
 
-If you've previously installed `create-lilypad-module`, you can run `pip install --upgrade create-lilypad-module` to ensure that you're using the latest version.
+If you've previously installed `create-lilypad-module`, you should to ensure that you're using the latest version:
+
+```sh
+pip install --upgrade create-lilypad-module
+```
 
 Now run `create-lilypad-module`:
 
