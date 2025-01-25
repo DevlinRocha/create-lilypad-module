@@ -123,7 +123,8 @@ def scaffold_project(project_name: str, github_username: str) -> None:
         if github_username:
             github_repo = f"github.com/{github_username}/{project_name}"
             generate_module_config(
-                github_repo=github_repo, output_file=target_dir / "lilypad_module.json"
+                github_repo=github_repo,
+                output_file=target_dir / "lilypad_module.json.tmpl",
             )
         else:
             print("Error: GitHub username could not be determined. Exiting.")
