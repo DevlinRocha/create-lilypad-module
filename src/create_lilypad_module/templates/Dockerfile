@@ -12,7 +12,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 RUN mkdir -p /outputs
 
-COPY run_inference.py .
+COPY src /src
 COPY model /model
 
 ENV PYTHONUNBUFFERED=1

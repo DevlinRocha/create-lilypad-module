@@ -1,4 +1,4 @@
-from constants import MODEL_NAME
+from ..config.constants import MODEL_NAME
 
 
 def download_model():

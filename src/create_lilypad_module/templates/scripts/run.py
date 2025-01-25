@@ -1,6 +1,10 @@
 import argparse
 import subprocess
-from constants import MODULE_REPO, TARGET_COMMIT, WEB3_PRIVATE_KEY
+from ..config.constants import (
+    MODULE_REPO,
+    TARGET_COMMIT,
+    WEB3_PRIVATE_KEY,
+)
 
 parser = argparse.ArgumentParser(
     description="Run the Lilypad module with specified input."

@@ -71,7 +71,7 @@ def generate_module_config(github_repo: str, output_file: Path) -> None:
             "Spec": {
                 "Deal": {"Concurrency": 1},
                 "Docker": {
-                    "Entrypoint": ["python", "/workspace/run_inference.py"],
+                    "Entrypoint": ["python", "/workspace/src/run_inference.py"],
                     "WorkingDirectory": "/workspace",
                     "EnvironmentVariables": ["INPUT_TEXT={{ js .input }}"],
                     "Image": f"{github_repo}:latest",
