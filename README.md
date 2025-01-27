@@ -46,7 +46,7 @@ project_name
 │   └── constants.py
 ├── scripts
 │   ├── download_model.py
-│   └── run.py
+│   └── run_module.py
 ├── src
 │   └── run_inference.py
 ├── .gitignore
