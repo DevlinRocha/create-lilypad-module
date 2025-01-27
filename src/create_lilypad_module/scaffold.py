@@ -55,12 +55,11 @@ def copy_templates(target_dir: Path) -> None:
         sys.exit(1)
 
 
-def generate_module_config(github_repo: str, output_file: Path) -> None:
+def generate_module_config(output_file: Path) -> None:
     """
     Generates a configuration file for the Lilypad module.
 
     Args:
-        github_repo (str): The GitHub repository URL for the module.
         output_file (Path): Path to the output configuration JSON file.
 
     Raises:
@@ -77,7 +76,7 @@ def generate_module_config(github_repo: str, output_file: Path) -> None:
                     "Entrypoint": ["python", "/workspace/src/run_inference.py"],
                     "WorkingDirectory": "/workspace",
                     "EnvironmentVariables": ["INPUT_TEXT={{ js .input }}"],
-                    "Image": f"{github_repo}:latest",
+                    "Image": "",
                 },
                 "Engine": "Docker",
                 "Network": {"Type": "None"},
@@ -98,7 +97,7 @@ def generate_module_config(github_repo: str, output_file: Path) -> None:
         sys.exit(1)
 
 
-def scaffold_project(project_name: str, github_username: str) -> None:
+def scaffold_project(project_name: str) -> None:
     """
     Scaffolds a new Lilypad module project in the specified directory.
 
@@ -123,15 +122,9 @@ def scaffold_project(project_name: str, github_username: str) -> None:
         copy_templates(target_dir)
         initialize_git_repo(target_dir)
 
-        if github_username:
-            github_repo = f"github.com/{github_username}/{project_name}"
-            generate_module_config(
-                github_repo=github_repo,
-                output_file=target_dir / "lilypad_module.json.tmpl",
-            )
-        else:
-            print("Error: GitHub username could not be determined. Exiting.")
-            sys.exit(1)
+        generate_module_config(
+            output_file=target_dir / "lilypad_module.json.tmpl",
+        )
 
         print(f"\n✅ Success! Created {project_name} at ~/{project_name}")
         print("\nOpen the project by typing:")
@@ -153,15 +146,9 @@ def main() -> None:
         nargs="?",
         help="Name of the new project.",
     )
-    parser.add_argument(
-        "github_username",
-        type=str,
-        nargs="?",
-        help="GitHub username.",
-    )
+
     args = parser.parse_args()
     project_name = args.project_name
-    github_username = args.github_username
 
     if not project_name:
         project_name = input(
@@ -169,13 +156,8 @@ def main() -> None:
         ).strip()
         if not project_name:
             project_name = "lilypad-module"
-    if not github_username:
-        github_username = input("Enter your GitHub username: ").strip()
-        if not github_username:
-            print("Error: GitHub username is required")
-            sys.exit(1)
 
-    scaffold_project(project_name, github_username)
+    scaffold_project(project_name)
 
 
 if __name__ == "__main__":
