@@ -55,48 +55,6 @@ def copy_templates(target_dir: Path) -> None:
         sys.exit(1)
 
 
-def generate_module_config(output_file: Path) -> None:
-    """
-    Generates a configuration file for the Lilypad module.
-
-    Args:
-        output_file (Path): Path to the output configuration JSON file.
-
-    Raises:
-        OSError: If an error occurs while writing the configuration file.
-    """
-    config = {
-        "machine": {"gpu": 0, "cpu": 1000, "ram": 4000},
-        "job": {
-            "APIVersion": "V1beta1",
-            "Metadata": {"CreatedAt": "0001-01-01T00:00:00Z", "Requester": {}},
-            "Spec": {
-                "Deal": {"Concurrency": 1},
-                "Docker": {
-                    "Entrypoint": ["python", "/workspace/src/run_inference.py"],
-                    "WorkingDirectory": "/workspace",
-                    "EnvironmentVariables": ["INPUT_TEXT={{ js .input }}"],
-                    "Image": "",
-                },
-                "Engine": "Docker",
-                "Network": {"Type": "None"},
-                "Outputs": [{"Name": "outputs", "Path": "/outputs"}],
-                "PublisherSpec": {"Type": "ipfs"},
-                "Resources": {"CPU": "1", "Memory": "4000"},
-                "Timeout": 600,
-                "Wasm": {"EntryModule": {}},
-            },
-        },
-    }
-
-    try:
-        with open(output_file, "w") as json_file:
-            json.dump(config, json_file, indent=4)
-    except OSError as error:
-        print(f"Error writing configuration file: {error}")
-        sys.exit(1)
-
-
 def scaffold_project(project_name: str) -> None:
     """
     Scaffolds a new Lilypad module project in the specified directory.
@@ -121,10 +79,6 @@ def scaffold_project(project_name: str) -> None:
 
         copy_templates(target_dir)
         initialize_git_repo(target_dir)
-
-        generate_module_config(
-            output_file=target_dir / "lilypad_module.json.tmpl",
-        )
 
         print(f"\n✅ Success! Created {project_name} at ~/{project_name}")
         print("\nOpen the project by typing:")
