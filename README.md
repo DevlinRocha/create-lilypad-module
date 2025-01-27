@@ -31,10 +31,10 @@ Now run `create-lilypad-module`:
 create-lilypad-module
 ```
 
-The CLI will ask for the name of your project and your GitHub username. Alternatively, you can run:
+The CLI will ask for the name of your project. Alternatively, you can run:
 
 ```sh
-create-lilypad-module project_name github_username
+create-lilypad-module project_name
 cd project_name
 ```
 
