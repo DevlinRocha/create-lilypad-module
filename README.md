@@ -50,6 +50,8 @@ project_name
 ├── src
 │   └── run_inference.py
 ├── .gitignore
+├── Dockerfile
 ├── lilypad_module.json.tmpl
 └── README.md
+└── requirements.txt
 ```
