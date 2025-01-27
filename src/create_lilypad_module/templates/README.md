@@ -2,22 +2,68 @@
 
 This project was bootstrapped with [Create Lilypad Module](https://github.com/DevlinRocha/create-lilypad-module).
 
+## Configuration
+
+Additional configuration is required to run the Lilypad module.
+
+> [config/constants.py](./config/constants.py)
+
+```python
+MODEL_NAME = ""
+MODULE_REPO = ""
+TARGET_COMMIT = ""
+DOCKER_REPO = ""
+WEB3_DEVELOPMENT_KEY = ""
+```
+
+### `MODEL_NAME`
+
+The name of the model from [Hugging Face](https://huggingface.co/).
+
+### `MODULE_REPO`
+
+The URL for the GitHub repository storing the module code.
+
+### `TARGET_COMMIT`
+
+The git commit hash that will be used to run the module.
+
+Use `git log` to find and set this easily.
+
+### `DOCKER_REPO`
+
+The URL for the Docker Hub repository storing the container image of the module code.
+
+### `WEB3_DEVELOPMENT_KEY`
+
+> 🚨 **DO NOT SHARE THIS KEY** 🚨
+
+The private key for the wallet that will be used to run the job.
+
+A new burner wallet is highly recommended to use for development.
+The wallet must have enough LP to fund the job.
+
+- [Funding your wallet](https://docs.lilypad.tech/lilypad/lilypad-testnet/quick-start/funding-your-wallet-from-faucet)
+
 ## Available Scripts
 
 In the project directory, you can run:
 
-### `python scripts/run.py`
+### [`python scripts/download_model.py`](./scripts/download_model.py)
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+A basic outline for downloading a model is provided, but the structure of the script and the methods for downloading and saving the model can differ between models and libraries. It’s important to tailor the process to the specific requirements of the model you're working with.
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+### [`python scripts/docker_build.py`](./scripts/docker_build.py)
 
-### `python scripts/download_model.py`
+Builds and publishes a Docker image for the module to use.
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+### [`python scripts/run_module.py`](./scripts/run_module.py)
+
+This script is provided for convenience to speed up development. It is equivalent to running the Lilypad module with the provided input and private key. Depending on how your module works, you may need to change the default behavior of this script.oc
+
+#### `--local` Flag
+
+Running the script with `--local` passed in runs the Lilypad module Docker image locally instead of on Lilypad's Network.
 
 ## Learn More
 
