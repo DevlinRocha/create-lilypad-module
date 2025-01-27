@@ -38,21 +38,18 @@ def copy_templates(target_dir: Path) -> None:
     Raises:
         OSError: If an error occurs during the file or directory copying process.
     """
+    templates_dir = Path(__file__).resolve().parent / "templates"
+
+    if not templates_dir.is_dir():
+        print(f"Error: Templates directory not found at {templates_dir}")
+        sys.exit(1)
     try:
-        with files("create_lilypad_module").joinpath("templates") as templates_dir:
-            for root, dirs, file_list in os.walk(templates_dir):
-                dirs[:] = [d for d in dirs if d != "__pycache__"]
-
-                for file_name in file_list:
-                    if file_name.endswith(".pyc"):
-                        continue
-
-                    source_file = Path(root) / file_name
-                    relative_path = source_file.relative_to(templates_dir)
-                    destination_file = target_dir / relative_path
-
-                    destination_file.parent.mkdir(parents=True, exist_ok=True)
-                    shutil.copy(source_file, destination_file)
+        shutil.copytree(
+            templates_dir,
+            target_dir,
+            dirs_exist_ok=True,
+            ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
+        )
     except OSError as error:
         print(f"Error copying templates: {error}")
         sys.exit(1)
