@@ -3,7 +3,7 @@ import subprocess
 from ..config.constants import (
     MODULE_REPO,
     TARGET_COMMIT,
-    WEB3_PRIVATE_KEY,
+    WEB3_DEVELOPMENT_KEY,
 )
 
 parser = argparse.ArgumentParser(
@@ -23,7 +23,7 @@ command = [
     "run",
     f"{MODULE_REPO}:{TARGET_COMMIT}",
     "--web3-private-key",
-    WEB3_PRIVATE_KEY,
+    WEB3_DEVELOPMENT_KEY,
     "-i",
     f"input={input}",
 ]
