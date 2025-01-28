@@ -1,5 +1,5 @@
 import subprocess
-from ..config.constants import DOCKER_REPO
+from config.constants import DOCKER_REPO
 
 
 def docker_build():
@@ -16,7 +16,7 @@ def docker_build():
     ]
 
     try:
-        result = subprocess.run(command, check=True, text=True)
+        result = subprocess.run(command, check=True, text=True, capture_output=True)
         print("Lilypad module executed successfully.")
         return result
     except subprocess.CalledProcessError as e:
