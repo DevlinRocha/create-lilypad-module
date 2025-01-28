@@ -17,7 +17,7 @@ def docker_build():
 
     try:
         result = subprocess.run(command, check=True, text=True, capture_output=True)
-        print("Lilypad module executed successfully.")
+        print("Docker image built and published to Docker Hub successfully.")
         return result
     except subprocess.CalledProcessError as e:
         print(f"An error occurred: {e}")
