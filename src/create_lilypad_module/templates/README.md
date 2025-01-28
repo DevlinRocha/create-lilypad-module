@@ -53,11 +53,11 @@ In the project directory, you can run:
 
 A basic outline for downloading a model is provided, but the structure of the script and the methods for downloading and saving the model can differ between models and libraries. It’s important to tailor the process to the specific requirements of the model you're working with.
 
-### [`python -m scripts.docker_build.py`](./scripts/docker_build.py)
+### [`python -m scripts.docker_build`](./scripts/docker_build.py)
 
 Builds and publishes a Docker image for the module to use.
 
-### [`python scripts/run_module.py`](./scripts/run_module.py)
+### [`python -m scripts.run_module`](./scripts/run_module.py)
 
 This script is provided for convenience to speed up development. It is equivalent to running the Lilypad module with the provided input and private key. Depending on how your module works, you may need to change the default behavior of this script.
 

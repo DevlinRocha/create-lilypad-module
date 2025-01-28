@@ -1,6 +1,6 @@
 import argparse
 import subprocess
-from ..config.constants import (
+from config.constants import (
     DOCKER_REPO,
     MODULE_REPO,
     TARGET_COMMIT,
