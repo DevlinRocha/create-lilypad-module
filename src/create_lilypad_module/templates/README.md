@@ -59,7 +59,7 @@ Builds and publishes a Docker image for the module to use.
 
 ### [`python scripts/run_module.py`](./scripts/run_module.py)
 
-This script is provided for convenience to speed up development. It is equivalent to running the Lilypad module with the provided input and private key. Depending on how your module works, you may need to change the default behavior of this script.oc
+This script is provided for convenience to speed up development. It is equivalent to running the Lilypad module with the provided input and private key. Depending on how your module works, you may need to change the default behavior of this script.
 
 #### `--local` Flag
 
