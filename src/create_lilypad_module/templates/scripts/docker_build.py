@@ -8,7 +8,7 @@ def docker_build():
         "buildx",
         "build",
         "--platform",
-        "linux/amd64,linux/arm64",
+        "linux/amd64",
         "-t",
         f"{DOCKER_REPO}:latest",
         "--push",
