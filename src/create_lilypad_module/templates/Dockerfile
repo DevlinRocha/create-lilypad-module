@@ -18,4 +18,4 @@ COPY model /model
 ENV HF_HOME=/model
 ENV TRANSFORMERS_OFFLINE=1
 
-ENTRYPOINT ["python", "/workspace/run_inference.py"]
+ENTRYPOINT ["python", "/workspace/src/run_inference.py"]
