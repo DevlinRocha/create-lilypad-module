@@ -49,7 +49,7 @@ The wallet must have enough LP to fund the job.
 
 In the project directory, you can run:
 
-### [`python scripts/download_model.py`](./scripts/download_model.py)
+### [`python -m scripts.download_model`](./scripts/download_model.py)
 
 A basic outline for downloading a model is provided, but the structure of the script and the methods for downloading and saving the model can differ between models and libraries. It’s important to tailor the process to the specific requirements of the model you're working with.
 
