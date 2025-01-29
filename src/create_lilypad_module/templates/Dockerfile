@@ -25,7 +25,7 @@ RUN mkdir -p /outputs
 COPY src /src
 
 # Set environment variables
-ENV HF_HOME=/model
+ENV HF_HOME=/models
 ENV TRANSFORMERS_OFFLINE=1
 
 # Set entrypoint

@@ -30,7 +30,7 @@ def main():
     print("Starting module", file=sys.stderr, flush=True)
 
     input = os.environ.get("INPUT", "Default input value")
-    model_directory = os.environ.get("MODEL_DIRECTORY", "/model")
+    model_directory = os.environ.get("MODEL_DIRECTORY", "/models")
 
     output = {"input": input, "status": "error"}
 
