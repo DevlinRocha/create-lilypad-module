@@ -45,7 +45,7 @@ project_name
 ├── config
 │   └── constants.py
 ├── scripts
-│   ├── download_model.py
+│   ├── download_models.py
 │   └── run_module.py
 ├── src
 │   └── run_inference.py
