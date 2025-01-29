@@ -13,8 +13,8 @@
         "Spec": {
             "Deal": { "Concurrency": 1 },
             "Docker": {
-                "Entrypoint": ["python", "/workspace/src/run_inference.py"],
                 "WorkingDirectory": "/workspace",
+                "Entrypoint": ["python", "/workspace/src/run_inference.py"],
                 "EnvironmentVariables": [
                     "INPUT={{ js .input }}"
                 ],
