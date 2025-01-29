@@ -1,6 +1,6 @@
 FROM python:3.9-slim
 
-RUN apt-get update && apt-get install -y \
+RUN apt-get update && apt-get install -y --no-install-recommends \
   build-essential \
   wget \
   && rm -rf /var/lib/apt/lists/*
@@ -18,4 +18,4 @@ COPY model /model
 ENV HF_HOME=/model
 ENV TRANSFORMERS_OFFLINE=1
 
-ENTRYPOINT ["python", "/workspace/src/run_inference.py"]
+ENTRYPOINT ["python", "/src/run_inference.py"]
