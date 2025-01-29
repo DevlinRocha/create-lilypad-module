@@ -1,9 +1,9 @@
-from config.constants import MODEL_NAME
+from config.constants import MODEL_URL
 
 
 def download_model():
-    # tokenizer = AutoTokenizer.from_pretrained(MODEL_NAME)
-    # model = AutoModelForSequenceClassification.from_pretrained(MODEL_NAME)
+    # tokenizer = AutoTokenizer.from_pretrained(MODEL_URL)
+    # model = AutoModelForSequenceClassification.from_pretrained(MODEL_URL)
 
     tokenizer.save_pretrained("./model")
     model.save_pretrained("./model")

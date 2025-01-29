@@ -9,16 +9,12 @@ Additional configuration is required to run the Lilypad module.
 > [config/constants.py](./config/constants.py)
 
 ```python
-MODEL_NAME = ""
 MODULE_REPO = ""
 TARGET_COMMIT = ""
+MODEL_URL = ""
 DOCKER_REPO = ""
 WEB3_DEVELOPMENT_KEY = ""
 ```
-
-### `MODEL_NAME`
-
-The name of the model from [Hugging Face](https://huggingface.co/).
 
 ### `MODULE_REPO`
 
@@ -29,6 +25,10 @@ The URL for the GitHub repository storing the module code.
 The git commit hash that will be used to run the module.
 
 Use `git log` to find and set this easily.
+
+### `MODEL_URL`
+
+The URL of the model from [Hugging Face](https://huggingface.co/).
 
 ### `DOCKER_REPO`
 
