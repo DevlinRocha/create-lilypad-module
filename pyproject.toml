@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "create_lilypad_module"
-version = "0.1.36"
+version = "0.1.37"
 description = "A CLI tool to quickly scaffold and initialize new Lilypad module projects with boilerplate code and configuration."
 readme = "README.md"
 keywords = [
