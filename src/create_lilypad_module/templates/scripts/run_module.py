@@ -32,7 +32,7 @@ def run_module():
             "docker",
             "run",
             "-e",
-            f"INPUT_TEXT={input}",
+            f"INPUT={input}",
             "-v",
             "$(pwd)/outputs:/outputs",
             f"{DOCKER_REPO}:latest",
