@@ -14,17 +14,24 @@ def run_module():
     )
 
     parser.add_argument(
-        "input", type=str, help="The input to be processed by the Lilypad module."
+        "input",
+        type=str,
+        nargs="?",
+        default=None,
+        help="The input to be processed by the Lilypad module.",
     )
 
     parser.add_argument(
         "--local",
+        action="store_true",
         help="Run the Lilypad module Docker image locally.",
     )
 
     args = parser.parse_args()
 
-    input = args.input
+    if args.input is None:
+        args.input = input("Please enter your input: ")
+
     local = args.local
 
     command = (
@@ -32,7 +39,7 @@ def run_module():
             "docker",
             "run",
             "-e",
-            f"INPUT={input}",
+            f"INPUT={args.input}",
             "-v",
             "$(pwd)/outputs:/outputs",
             f"{DOCKER_REPO}:latest",
@@ -45,7 +52,7 @@ def run_module():
             "--web3-private-key",
             WEB3_DEVELOPMENT_KEY,
             "-i",
-            f"input={input}",
+            f"input={args.input}",
         ]
     )
 
