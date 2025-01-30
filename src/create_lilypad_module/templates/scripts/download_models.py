@@ -9,14 +9,14 @@ def download_models():
     MODEL_IDENTIFIER = ""
 
     try:
-        # tokenizer = AutoTokenizer.from_pretrained(MODEL_IDENTIFIER)
-        # model = AutoModelForSequenceClassification.from_pretrained(MODEL_IDENTIFIER)
+        tokenizer = AutoTokenizer.from_pretrained(MODEL_IDENTIFIER)
+        model = AutoModelForSequenceClassification.from_pretrained(MODEL_IDENTIFIER)
         tokenizer.save_pretrained("./models")
         model.save_pretrained("./models")
         print("Models downloaded successfully.")
     except:
-        print("Error downloading models.")
-        print("Have you configured the download script?")
+        print("❌ Error downloading models.")
+        print("⛔️ Have you configured the download script?")
         print("👉 /scripts/download_models.py")
 
 
