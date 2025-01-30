@@ -20,14 +20,18 @@ def run_job(input, model, tokenizer):
 
         return output
 
-    except Exception as e:
-        print(f"❌ Error running job: {e}", file=sys.stderr)
+    except Exception as error:
+        print(
+            f"❌ Error running job: {error}",
+            file=sys.stderr,
+            flush=True,
+        )
         traceback.print_exc(file=sys.stderr)
         raise
 
 
 def main():
-    print("Starting module", file=sys.stderr, flush=True)
+    print("Starting inference...")
 
     input = os.environ.get("INPUT", "Default input value")
     model_directory = os.environ.get("MODEL_DIRECTORY", "/models")
@@ -58,8 +62,6 @@ def main():
             json.dump(output, f, indent=2)
         print(
             f"✅ Successfully wrote output to {output_path}",
-            file=sys.stderr,
-            flush=True,
         )
     except Exception as error:
         print(f"❌ Error writing output file: {error}", file=sys.stderr, flush=True)

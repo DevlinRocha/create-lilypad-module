@@ -1,6 +1,7 @@
 import argparse
 import os
 import subprocess
+import sys
 from config.constants import (
     DOCKER_REPO,
     MODULE_REPO,
@@ -10,6 +11,15 @@ from config.constants import (
 
 
 def run_module():
+    # Remove the following print and sys.exit statements and create the module job.
+    print(
+        "❌ Error: No job configured. Implement the module's job before running the module.",
+        file=sys.stderr,
+        flush=True,
+    )
+    print("👉 /src/run_inference.py", file=sys.stderr, flush=True)
+    sys.exit(1)
+
     parser = argparse.ArgumentParser(
         description="Run the Lilypad module with specified input."
     )
@@ -31,7 +41,7 @@ def run_module():
     args = parser.parse_args()
 
     if args.input is None:
-        args.input = input("Please enter your input: ")
+        args.input = input("Enter your input: ").strip()
 
     local = args.local
 
@@ -60,12 +70,18 @@ def run_module():
     )
 
     try:
+        print("Executing Lilypad module...")
         result = subprocess.run(command, check=True, text=True)
         print("✅ Lilypad module executed successfully.")
         print(f"👉 {output_dir}/result.json")
         return result
-    except subprocess.CalledProcessError as e:
-        print(f"❌ Error: {e}")
+    except subprocess.CalledProcessError as error:
+        print(
+            f"❌ Error: Module execution failed. {error}",
+            file=sys.stderr,
+            flush=True,
+        )
+        sys.exit(1)
 
 
 if __name__ == "__main__":

@@ -1,13 +1,12 @@
 #!/usr/bin/env python3
 
 import argparse
-import json
 import os
 import shutil
 import subprocess
 import sys
+import textwrap
 from pathlib import Path
-from importlib.resources import files
 
 
 def initialize_git_repo(target_dir: Path) -> None:
@@ -24,7 +23,11 @@ def initialize_git_repo(target_dir: Path) -> None:
         os.chdir(target_dir)
         subprocess.run(["git", "init"], check=True)
     except subprocess.CalledProcessError as error:
-        print(f"❌ Error: Failed to initialize Git repository. {error}")
+        print(
+            f"❌ Error: Failed to initialize Git repository. {error}",
+            file=sys.stderr,
+            flush=True,
+        )
         sys.exit(1)
 
 
@@ -41,8 +44,13 @@ def copy_templates(target_dir: Path) -> None:
     templates_dir = Path(__file__).resolve().parent / "templates"
 
     if not templates_dir.is_dir():
-        print(f"❌ Error: Templates directory not found at {templates_dir}")
+        print(
+            f"❌ Error: Templates directory not found at {templates_dir}",
+            file=sys.stderr,
+            flush=True,
+        )
         sys.exit(1)
+
     try:
         shutil.copytree(
             templates_dir,
@@ -51,7 +59,11 @@ def copy_templates(target_dir: Path) -> None:
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
         )
     except OSError as error:
-        print(f"❌ Error copying templates: {error}")
+        print(
+            f"❌ Error copying templates: {error}",
+            file=sys.stderr,
+            flush=True,
+        )
         sys.exit(1)
 
 
@@ -68,7 +80,11 @@ def scaffold_project(project_name: str) -> None:
     target_dir = Path.cwd() / project_name
 
     if target_dir.exists():
-        print(f"❌ Error: Directory '{project_name}' already exists.")
+        print(
+            f"❌ Error: Directory '{project_name}' already exists.",
+            file=sys.stderr,
+            flush=True,
+        )
         sys.exit(1)
 
     try:
@@ -81,11 +97,16 @@ def scaffold_project(project_name: str) -> None:
         initialize_git_repo(target_dir)
 
         print(f"\n✅ Success! Created {project_name} at ~/{project_name}")
-        print("\nOpen the project by typing:")
+        print("\n📂 Get started by running:")
         print(f"\n\t\033[38;2;20;199;195mcd\033[0m {project_name}")
-        print(f"\nGLHF!")
+        print(f"\n\t\033[38;2;20;199;195mopen\033[0m README.md")
+        print(f"\n🐸 GLHF!")
     except Exception as error:
-        print(f"❌ Error scaffolding project: {error}")
+        print(
+            f"❌ Error scaffolding project: {error}",
+            file=sys.stderr,
+            flush=True,
+        )
         sys.exit(1)
 
 
@@ -106,7 +127,11 @@ def main() -> None:
 
     if not project_name:
         project_name = input(
-            "Enter the name of your new project (default: lilypad-module): "
+            textwrap.dedent(
+                """
+                🐸 Enter the name of your new project:
+                (Default: lilypad-module) ➡️ """
+            )
         ).strip()
         if not project_name:
             project_name = "lilypad-module"
