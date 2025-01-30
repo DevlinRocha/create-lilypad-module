@@ -37,30 +37,17 @@ def docker_build():
         print("👉 python -m scripts.docker_build --push")
         return
 
-    command = (
-        [
-            "docker",
-            "buildx",
-            "build",
-            "--platform",
-            "linux/amd64",
-            "-t",
-            f"{DOCKER_REPO}:latest",
-            "--push",
-            ".",
-        ]
-        if push
-        else [
-            "docker",
-            "buildx",
-            "build",
-            "--platform",
-            f"linux/{machine_arch}",
-            "-t",
-            f"{DOCKER_REPO}:latest",
-            ".",
-        ]
-    )
+    command = [
+        "docker",
+        "buildx",
+        "build",
+        "--platform",
+        f"linux/{'amd64' if push else machine_arch}",
+        "-t",
+        f"{DOCKER_REPO}:latest",
+        "--push" if push else "--load",
+        ".",
+    ]
 
     try:
         result = subprocess.run(command, check=True, text=True, capture_output=True)
