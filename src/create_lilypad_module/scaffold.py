@@ -130,7 +130,7 @@ def main() -> None:
             textwrap.dedent(
                 """
                 🐸 Enter the name of your new project:
-                (Default: lilypad-module) ➡️ """
+                (Default: lilypad-module) ➡️  """
             )
         ).strip()
         if not project_name:
