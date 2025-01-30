@@ -99,7 +99,7 @@ def scaffold_project(project_name: str) -> None:
         print(f"\n✅ Success! Created {project_name} at ~/{project_name}")
         print("\n📂 Get started by running:")
         print(f"\n\t\033[38;2;20;199;195mcd\033[0m {project_name}")
-        print(f"\n\t\033[38;2;20;199;195mopen\033[0m README.md")
+        print(f"\t\033[38;2;20;199;195mopen\033[0m README.md")
         print(f"\n🐸 GLHF!")
     except Exception as error:
         print(
