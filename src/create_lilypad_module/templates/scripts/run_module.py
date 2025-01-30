@@ -1,4 +1,5 @@
 import argparse
+import os
 import subprocess
 from config.constants import (
     DOCKER_REPO,
@@ -34,6 +35,8 @@ def run_module():
 
     local = args.local
 
+    output_dir = os.path.abspath("./outputs")
+
     command = (
         [
             "docker",
@@ -41,7 +44,7 @@ def run_module():
             "-e",
             f"INPUT={args.input}",
             "-v",
-            "$(pwd)/outputs:/outputs",
+            f"{output_dir}:/outputs",
             f"{DOCKER_REPO}:latest",
         ]
         if local
