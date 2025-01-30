@@ -54,6 +54,7 @@ def docker_build():
             "docker",
             "buildx",
             "build",
+            "--platform",
             f"linux/{machine_arch}",
             "-t",
             f"{DOCKER_REPO}:latest",
