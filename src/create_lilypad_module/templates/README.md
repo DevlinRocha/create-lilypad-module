@@ -56,6 +56,10 @@ Builds and publishes a Docker image for the module to use.
 
 Running the script with `--push` passed in pushes the Docker image to Docker Hub.
 
+#### `--no-cache` Flag
+
+Running the script with `--no-cache` pased in builds the Docker image without using cache. Useful if you are having issues with your local Docker image. This flag is automatically applied when using `--push`.
+
 ### [`python -m scripts.run_module`](./scripts/run_module.py)
 
 This script is provided for convenience to speed up development. It is equivalent to running the Lilypad module with the provided input and private key. Depending on how your module works, you may need to change the default behavior of this script.
