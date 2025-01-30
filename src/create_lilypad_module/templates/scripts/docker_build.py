@@ -64,10 +64,14 @@ def docker_build():
 
     try:
         result = subprocess.run(command, check=True, text=True, capture_output=True)
-        print("Docker image built and published to Docker Hub successfully.")
+        (
+            print("✅ Docker image built and published to Docker Hub successfully.")
+            if push
+            else print("✅ Docker image built successfully.")
+        )
         return result
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred: {e}")
+        print(f"❌ An error occurred: {e}")
 
 
 if __name__ == "__main__":
