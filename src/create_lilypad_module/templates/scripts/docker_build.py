@@ -15,9 +15,16 @@ def docker_build():
         help="Push the Docker image to Docker Hub.",
     )
 
+    parser.add_argument(
+        "--no-cache",
+        action="store_true",
+        help="Build the Docker image without using cache.",
+    )
+
     args = parser.parse_args()
 
     push = args.push
+    no_cache = args.no_cache
 
     machine_arch = platform.machine()
     if machine_arch in ["arm64", "aarch64"]:
@@ -46,6 +53,7 @@ def docker_build():
         "-t",
         f"{DOCKER_REPO}:latest",
         "--push" if push else "--load",
+        *(["--no-cache"] if push or no_cache else []),
         ".",
     ]
 
