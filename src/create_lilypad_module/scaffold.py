@@ -24,7 +24,7 @@ def initialize_git_repo(target_dir: Path) -> None:
         os.chdir(target_dir)
         subprocess.run(["git", "init"], check=True)
     except subprocess.CalledProcessError as error:
-        print(f"Error: Failed to initialize Git repository. {error}")
+        print(f"❌ Error: Failed to initialize Git repository. {error}")
         sys.exit(1)
 
 
@@ -41,7 +41,7 @@ def copy_templates(target_dir: Path) -> None:
     templates_dir = Path(__file__).resolve().parent / "templates"
 
     if not templates_dir.is_dir():
-        print(f"Error: Templates directory not found at {templates_dir}")
+        print(f"❌ Error: Templates directory not found at {templates_dir}")
         sys.exit(1)
     try:
         shutil.copytree(
@@ -51,7 +51,7 @@ def copy_templates(target_dir: Path) -> None:
             ignore=shutil.ignore_patterns("__pycache__", "*.pyc"),
         )
     except OSError as error:
-        print(f"Error copying templates: {error}")
+        print(f"❌ Error copying templates: {error}")
         sys.exit(1)
 
 
@@ -68,7 +68,7 @@ def scaffold_project(project_name: str) -> None:
     target_dir = Path.cwd() / project_name
 
     if target_dir.exists():
-        print(f"Error: Directory '{project_name}' already exists.")
+        print(f"❌ Error: Directory '{project_name}' already exists.")
         sys.exit(1)
 
     try:
@@ -85,7 +85,7 @@ def scaffold_project(project_name: str) -> None:
         print(f"\n\t\033[38;2;20;199;195mcd\033[0m {project_name}")
         print(f"\nGLHF!")
     except Exception as error:
-        print(f"Error scaffolding project: {error}")
+        print(f"❌ Error scaffolding project: {error}")
         sys.exit(1)
 
 

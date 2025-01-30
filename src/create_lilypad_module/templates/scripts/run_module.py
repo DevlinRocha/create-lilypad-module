@@ -61,10 +61,11 @@ def run_module():
 
     try:
         result = subprocess.run(command, check=True, text=True)
-        print("Lilypad module executed successfully.")
+        print("✅ Lilypad module executed successfully.")
+        print(f"👉 {output_dir}/result.json")
         return result
     except subprocess.CalledProcessError as e:
-        print(f"An error occurred: {e}")
+        print(f"❌ Error: {e}")
 
 
 if __name__ == "__main__":

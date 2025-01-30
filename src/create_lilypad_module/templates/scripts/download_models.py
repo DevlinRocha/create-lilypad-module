@@ -13,7 +13,7 @@ def download_models():
         model = AutoModelForSequenceClassification.from_pretrained(MODEL_IDENTIFIER)
         tokenizer.save_pretrained("./models")
         model.save_pretrained("./models")
-        print("Models downloaded successfully.")
+        print("✅ Models downloaded successfully.")
     except:
         print("❌ Error downloading models.")
         print("⛔️ Have you configured the download script?")
