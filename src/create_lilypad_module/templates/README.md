@@ -52,6 +52,10 @@ A basic outline for downloading a model is provided, but the structure of the sc
 
 Builds and publishes a Docker image for the module to use.
 
+#### `--push` Flag
+
+Running the script with `--push` passed in pushes the Docker image to Docker Hub.
+
 ### [`python -m scripts.run_module`](./scripts/run_module.py)
 
 This script is provided for convenience to speed up development. It is equivalent to running the Lilypad module with the provided input and private key. Depending on how your module works, you may need to change the default behavior of this script.
