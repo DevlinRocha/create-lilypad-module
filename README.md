@@ -45,6 +45,7 @@ project_name
 ├── config
 │   └── constants.py
 ├── scripts
+│   ├── docker_build.py
 │   ├── download_models.py
 │   └── run_module.py
 ├── src
