@@ -17,7 +17,10 @@ def run_module():
         file=sys.stderr,
         flush=True,
     )
-    print("👉 /src/run_inference.py", file=sys.stderr, flush=True)
+    print("1. Implement job for module")
+    print("\t👉 /src/run_inference.py")
+    print("2. Delete this code block")
+    print("\t👉 /scripts/run_module.py")
     sys.exit(1)
 
     parser = argparse.ArgumentParser(

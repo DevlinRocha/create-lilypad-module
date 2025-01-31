@@ -70,7 +70,8 @@ def docker_build():
     ]
 
     try:
-        result = subprocess.run(command, check=True, text=True, capture_output=True)
+        print("Building Docker image...")
+        result = subprocess.run(command, check=True, text=True)
         if push:
             print("✅ Docker image built and published to Docker Hub successfully.")
         else:
