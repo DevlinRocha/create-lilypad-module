@@ -68,7 +68,7 @@ def run_module():
             "--web3-private-key",
             WEB3_DEVELOPMENT_KEY,
             "-i",
-            f"input={args.input}",
+            f'input="{args.input}"',
         ]
     )
 
