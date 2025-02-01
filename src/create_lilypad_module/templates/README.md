@@ -75,6 +75,8 @@ Running the script with `--local` passed in runs the Lilypad module Docker image
 
 ## Learn More
 
-Learn how to build a [Lilypad job module](https://docs.lilypad.tech/lilypad/developer-resources/build-a-job-module).
+Learn how to [build a Lilypad job module](https://docs.lilypad.tech/lilypad/developer-resources/build-a-job-module).
+
+Reference the [Lilypad Module Builder Guide](https://blog.lilypadnetwork.org/lilypad-module-builder-guide).
 
 To learn more about Lilypad, check out the [Lilypad documentation](https://docs.lilypad.tech/lilypad).
