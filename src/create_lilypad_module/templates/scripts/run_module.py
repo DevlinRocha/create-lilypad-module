@@ -6,11 +6,20 @@ from config.constants import (
     DOCKER_REPO,
     MODULE_REPO,
     TARGET_COMMIT,
-    WEB3_DEVELOPMENT_KEY,
 )
 
 
 def run_module():
+    WEB3_PRIVATE_KEY = os.environ.get("WEB3_PRIVATE_KEY")
+
+    if not WEB3_PRIVATE_KEY:
+        print(
+            "❌ Error: No `WEB3_PRIVATE_KEY` configured ",
+            file=sys.stderr,
+            flush=True,
+        )
+        print("\t👉 /.env")
+
     # Remove the following print and sys.exit statements and create the module job.
     print(
         "❌ Error: No job configured. Implement the module's job before running the module.",
@@ -66,7 +75,7 @@ def run_module():
             "run",
             f"{MODULE_REPO}:{TARGET_COMMIT}",
             "--web3-private-key",
-            WEB3_DEVELOPMENT_KEY,
+            WEB3_PRIVATE_KEY,
             "-i",
             f'input="{args.input}"',
         ]
