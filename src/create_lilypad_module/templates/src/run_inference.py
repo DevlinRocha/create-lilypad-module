@@ -37,13 +37,14 @@ def main():
     print("Starting inference...")
 
     input = os.environ.get("INPUT", "Default input value")
-    model_directory = os.environ.get("MODEL_DIRECTORY", "/models")
+
+    MODEL_DIRECTORY = "/models"
 
     output = {"input": input, "status": "error"}
 
     try:
-        # tokenizer = AutoTokenizer.from_pretrained(model_directory)
-        # model = AutoModelForSeq2SeqLM.from_pretrained(model_directory)
+        # tokenizer = AutoTokenizer.from_pretrained(MODEL_DIRECTORY)
+        # model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_DIRECTORY)
 
         output = run_job(input, model, tokenizer)
         output.update(
