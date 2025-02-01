@@ -9,10 +9,10 @@ Additional configuration is required to run the Lilypad module.
 ### [`.env`](.env)
 
 ```
-WEB3_DEVELOPMENT_KEY = ""
+WEB3_PRIVATE_KEY = ""
 ```
 
-#### `WEB3_DEVELOPMENT_KEY`
+#### `WEB3_PRIVATE_KEY`
 
 > 🚨 **DO NOT SHARE THIS KEY** 🚨
 
