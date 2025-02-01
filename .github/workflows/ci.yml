@@ -1,10 +1,10 @@
 name: Publish Python Package
 
 on:
-#   release:
-#     types: [created]
+  #   release:
+  #     types: [created]
   push:
-    branches: '**'
+    branches: "main"
 
 jobs:
   build-and-publish:
@@ -17,7 +17,7 @@ jobs:
       - name: Set up Python
         uses: actions/setup-python@v2
         with:
-          python-version: '3.x'
+          python-version: "3.x"
 
       - name: Install build tools
         run: |
