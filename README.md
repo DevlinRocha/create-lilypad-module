@@ -50,6 +50,8 @@ project_name
 │   └── run_module.py
 ├── src
 │   └── run_inference.py
+├── .dockerignore
+├── .env
 ├── .gitignore
 ├── Dockerfile
 ├── lilypad_module.json.tmpl
