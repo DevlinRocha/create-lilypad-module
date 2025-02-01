@@ -1,6 +1,6 @@
 import sys
 
-# Update ../requirements.txt
+# TODO: Update ../requirements.txt
 # from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 
@@ -8,7 +8,7 @@ def download_models():
     # TODO: Set this to your model's Hugging Face identifier
     MODEL_IDENTIFIER = ""
 
-    # Remove the following if statement code block and configure the models the module needs.
+    # Configure the models the module needs.
     # Download the model(s) and tokenizer(s) for your module from the Hugging Face model hub
     # https://huggingface.co/docs/hub/en/models-downloading
     if not MODEL_IDENTIFIER:
