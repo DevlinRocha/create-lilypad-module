@@ -6,30 +6,13 @@ This project was bootstrapped with [Create Lilypad Module](https://github.com/De
 
 Additional configuration is required to run the Lilypad module.
 
-> [config/constants.py](./config/constants.py)
+### [`.env`](.env)
 
-```python
-MODULE_REPO = ""
-TARGET_COMMIT = ""
-DOCKER_REPO = ""
+```
 WEB3_DEVELOPMENT_KEY = ""
 ```
 
-### `MODULE_REPO`
-
-The URL for the GitHub repository storing the module code.
-
-### `TARGET_COMMIT`
-
-The git commit hash that will be used to run the module.
-
-Use `git log` to find and set this easily.
-
-### `DOCKER_REPO`
-
-The URL for the Docker Hub repository storing the container image of the module code.
-
-### `WEB3_DEVELOPMENT_KEY`
+#### `WEB3_DEVELOPMENT_KEY`
 
 > 🚨 **DO NOT SHARE THIS KEY** 🚨
 
@@ -39,6 +22,28 @@ A new burner wallet is highly recommended to use for development.
 The wallet must have enough LP to fund the job.
 
 - [Funding your wallet](https://docs.lilypad.tech/lilypad/lilypad-testnet/quick-start/funding-your-wallet-from-faucet)
+
+### [`config/constants.py`](./config/constants.py)
+
+```python
+DOCKER_REPO = ""
+MODULE_REPO = ""
+TARGET_COMMIT = ""
+```
+
+#### `DOCKER_REPO`
+
+The URL for the Docker Hub repository storing the container image of the module code.
+
+#### `MODULE_REPO`
+
+The URL for the GitHub repository storing the module code.
+
+#### `TARGET_COMMIT`
+
+The git commit hash that will be used to run the module.
+
+Use `git log` to find and set this easily.
 
 ## Available Scripts
 
