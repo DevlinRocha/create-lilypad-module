@@ -2,7 +2,7 @@ import argparse
 import platform
 import subprocess
 import sys
-from config.constants import DOCKER_REPO
+from config.constants import DOCKER_REPO, DOCKER_TAG
 
 
 def docker_build():
@@ -63,7 +63,7 @@ def docker_build():
         "--platform",
         f"linux/{'amd64' if push else os_arch}",
         "-t",
-        f"{DOCKER_REPO}:latest",
+        f"{DOCKER_REPO}:{DOCKER_TAG}",
         "--push" if push else "--load",
         *(["--no-cache"] if push or no_cache else []),
         ".",

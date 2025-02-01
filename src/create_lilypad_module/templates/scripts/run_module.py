@@ -20,7 +20,7 @@ def run_module():
         )
         print("\t👉 /.env")
 
-    # Remove the following print and sys.exit statements and create the module job.
+    # TODO: Remove the following print and sys.exit statements and create the module job.
     print(
         "❌ Error: No job configured. Implement the module's job before running the module.",
         file=sys.stderr,

@@ -8,7 +8,7 @@ def download_models():
     # TODO: Set this to your model's Hugging Face identifier
     MODEL_IDENTIFIER = ""
 
-    # Configure the models the module needs.
+    # TODO: Configure the model(s) needed for this module.
     # Download the model(s) and tokenizer(s) for your module from the Hugging Face model hub
     # https://huggingface.co/docs/hub/en/models-downloading
     if not MODEL_IDENTIFIER:
