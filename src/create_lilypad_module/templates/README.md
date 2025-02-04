@@ -27,13 +27,20 @@ The wallet must have enough LP to fund the job.
 
 ```python
 DOCKER_REPO = ""
+DOCKER_TAG = "latest"
 MODULE_REPO = ""
-TARGET_COMMIT = ""
+TARGET_COMMIT = "main"
 ```
 
 #### `DOCKER_REPO`
 
 The URL for the Docker Hub repository storing the container image of the module code.
+
+#### `DOCKER_TAG`
+
+The tag used with the `DOCKER_REPO`.
+
+Default: `"latest"`
 
 #### `MODULE_REPO`
 
@@ -41,9 +48,11 @@ The URL for the GitHub repository storing the module code.
 
 #### `TARGET_COMMIT`
 
-The git commit hash that will be used to run the module.
+The git branch or commit hash that will be used to run the module.
 
 Use `git log` to find and set this easily.
+
+Default: `"main"`
 
 ## Available Scripts
 
