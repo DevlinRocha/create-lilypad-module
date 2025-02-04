@@ -73,8 +73,8 @@ def run_module():
         else [
             "lilypad",
             "run",
-            # "--network",
-            # "demonet",
+            "--network",
+            "demonet",
             f"{MODULE_REPO}:{TARGET_COMMIT}",
             "--web3-private-key",
             WEB3_PRIVATE_KEY,
