@@ -34,7 +34,9 @@ TARGET_COMMIT = "main"
 
 #### `DOCKER_REPO`
 
-The URL for the Docker Hub repository storing the container image of the module code.
+The Docker Hub repository storing the container image of the module code.
+
+###### <dockerhub_username>/<dockerhub_image>
 
 #### `DOCKER_TAG`
 
@@ -72,7 +74,7 @@ Running the script with `--push` passed in pushes the Docker image to Docker Hub
 
 #### `--no-cache` Flag
 
-Running the script with `--no-cache` pased in builds the Docker image without using cache. Useful if you are having issues with your local Docker image. This flag is automatically applied when using `--push`.
+Running the script with `--no-cache` passed in builds the Docker image without using the cache. Useful if you are having issues with your local Docker image. This flag is automatically applied when using `--push`.
 
 ### [`python -m scripts.run_module`](./scripts/run_module.py)
 
