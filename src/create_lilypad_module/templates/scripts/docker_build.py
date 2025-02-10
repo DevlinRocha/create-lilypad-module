@@ -65,7 +65,7 @@ def docker_build():
         "-t",
         f"{DOCKER_REPO}:{DOCKER_TAG}",
         "--push" if push else "--load",
-        *(["--no-cache"] if push or no_cache else []),
+        *(["--no-cache"] if no_cache else []),
         ".",
     ]
 
