@@ -10,15 +10,8 @@ from config.constants import (
 
 
 def run_module():
+    DEMONET_PRIVATE_KEY = os.environ.get("DEMONET_PRIVATE_KEY")
     WEB3_PRIVATE_KEY = os.environ.get("WEB3_PRIVATE_KEY")
-
-    if not WEB3_PRIVATE_KEY:
-        print(
-            "❌ Error: No `WEB3_PRIVATE_KEY` configured ",
-            file=sys.stderr,
-            flush=True,
-        )
-        print("\t👉 /.env")
 
     # TODO: Remove the following print and sys.exit statements and create the module job.
     print(
@@ -50,17 +43,24 @@ def run_module():
         help="Run the Lilypad module Docker image locally.",
     )
 
+    parser.add_argument(
+        "--demonet",
+        action="store_true",
+        help="Test the Lilypad module Docker image on Lilypad's Demonet.",
+    )
+
     args = parser.parse_args()
 
     if args.input is None:
         args.input = input("Enter your input: ").strip()
 
     local = args.local
+    demonet = args.demonet
 
     output_dir = os.path.abspath("./outputs")
 
-    command = (
-        [
+    if local:
+        command = [
             "docker",
             "run",
             "-e",
@@ -69,19 +69,28 @@ def run_module():
             f"{output_dir}:/outputs",
             f"{DOCKER_REPO}:latest",
         ]
-        if local
-        else [
+    elif demonet:
+        command = [
             "lilypad",
             "run",
             "--network",
             "demonet",
             f"{MODULE_REPO}:{TARGET_COMMIT}",
             "--web3-private-key",
+            DEMONET_PRIVATE_KEY,
+            "-i",
+            f'input="{args.input}"',
+        ]
+    else:
+        command = [
+            "lilypad",
+            "run",
+            f"{MODULE_REPO}:{TARGET_COMMIT}",
+            "--web3-private-key",
             WEB3_PRIVATE_KEY,
             "-i",
             f'input="{args.input}"',
         ]
-    )
 
     try:
         print("Executing Lilypad module...")
