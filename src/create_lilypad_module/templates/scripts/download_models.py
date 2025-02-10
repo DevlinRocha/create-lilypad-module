@@ -22,8 +22,9 @@ def download_models():
 
     try:
         print(f"Downloading model `{MODEL_IDENTIFIER}`...")
-        tokenizer = AutoTokenizer.from_pretrained(MODEL_IDENTIFIER)
-        model = AutoModelForSequenceClassification.from_pretrained(MODEL_IDENTIFIER)
+        # TODO: Initialize `model` and `tokenizer`
+        # tokenizer = AutoTokenizer.from_pretrained(MODEL_IDENTIFIER)
+        # model = AutoModelForSequenceClassification.from_pretrained(MODEL_IDENTIFIER)
         tokenizer.save_pretrained("./models")
         model.save_pretrained("./models")
         print("✅ Models downloaded successfully.")
