@@ -2,6 +2,10 @@
 
 This project was bootstrapped with [Create Lilypad Module](https://github.com/DevlinRocha/create-lilypad-module).
 
+## Prerequisites
+
+To build and run a module on Lilypad Network, you'll need to have the [Lilypad CLI](https://docs.lilypad.tech/lilypad/lilypad-testnet/install-run-requirements), [Python](https://www.python.org/), [pip](https://pip.pypa.io/en/stable/), and [Docker](https://www.docker.com/), on your machine, as well as [GitHub](https://github.com/) and [Docker Hub](https://hub.docker.com/) accounts.
+
 ## Configuration
 
 Additional configuration is required to run the Lilypad module.
