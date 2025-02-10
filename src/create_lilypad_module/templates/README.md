@@ -23,6 +23,7 @@ WEB3_PRIVATE_KEY = ""
 The private key for the wallet that will be used to run the job.
 
 A new development wallet is highly recommended to use for development.
+
 The wallet must have enough LP tokens and Arbitrum Sepolia ETH to fund the job.
 
 - [Funding your wallet](https://docs.lilypad.tech/lilypad/lilypad-testnet/quick-start/funding-your-wallet-from-faucet)
@@ -116,6 +117,10 @@ This script is provided for convenience to speed up development. It is equivalen
 #### `--local` Flag
 
 Running the script with `--local` passed in runs the Lilypad module Docker image locally instead of on Lilypad's Network.
+
+#### `--demonet` Flag
+
+Running the script with `--demonet` passed in runs the Lilypad module Docker image on Lilypad's Demonet.
 
 ## Learn More
 
