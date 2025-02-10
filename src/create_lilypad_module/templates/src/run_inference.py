@@ -20,7 +20,7 @@ def run_job(input, model, tokenizer):
             padding=True,
         )
 
-        output = model(**inputs)
+        output = {model(**inputs)}
 
         return output
 
@@ -44,15 +44,15 @@ def main():
     output = {"input": input, "status": "error"}
 
     try:
-        # tokenizer = AutoTokenizer.from_pretrained(MODEL_DIRECTORY)
+        # TODO: Initialize `model` and `tokenizer`
         # model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_DIRECTORY)
+        # tokenizer = AutoTokenizer.from_pretrained(MODEL_DIRECTORY)
 
-        output = run_job(input, model, tokenizer)
-        output.update(
-            {
-                "status": "success",
-            }
-        )
+        output = {
+            "input": input,
+            "result": run_job(input, model, tokenizer),
+            "status": "success",
+        }
 
     except Exception as error:
         print("❌ Error during processing:", file=sys.stderr, flush=True)
