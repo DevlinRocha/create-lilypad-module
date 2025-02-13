@@ -1,33 +1,24 @@
 {
-    "machine": {
-        "gpu": 0,
-        "vram": 0,
-        "cpu": 1000,
-        "ram": 4000
+  "machine": { "gpu": 0, "vram": 0, "cpu": 1000, "ram": 4000 },
+  "job": {
+    "APIVersion": "V1beta1",
+    "Metadata": {
+      "CreatedAt": "0001-01-01T00:00:00Z",
+      "Requester": {}
     },
-    "job": {
-        "APIVersion": "V1beta1",
-        "Metadata": {
-            "CreatedAt": "0001-01-01T00:00:00Z",
-            "Requester": {}
-        },
-        "Spec": {
-            "Deal": { "Concurrency": 1 },
-            "Docker": {
-                "WorkingDirectory": "/workspace",
-                "Entrypoint": ["python", "/src/run_inference.py"],
-                "EnvironmentVariables": [
-                    "INPUT={{ js .input }}"
-                ],
-                "Image": "dockerhub_username/image:tag",
-            },
-            "Engine": "Docker",
-            "Network": { "Type": "None" },
-            "Outputs": [
-                { "Name": "outputs", "Path": "/outputs" }
-            ],
-            "Resources": { "CPU": "1", "Memory": "2Gb" },
-            "Timeout": 600,
-        }
+    "Spec": {
+      "Deal": { "Concurrency": 1 },
+      "Docker": {
+        "WorkingDirectory": "/workspace",
+        "Entrypoint": ["python", "/src/run_inference.py"],
+        "EnvironmentVariables": ["INPUT={{ js .input }}"],
+        "Image": "dockerhub_username/image:tag"
+      },
+      "Engine": "Docker",
+      "Network": { "Type": "None" },
+      "Outputs": [{ "Name": "outputs", "Path": "/outputs" }],
+      "Resources": { "GPU": "", "CPU": "1", "Memory": "2Gb" },
+      "Timeout": 600
     }
+  }
 }
