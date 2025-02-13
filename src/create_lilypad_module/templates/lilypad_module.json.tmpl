@@ -1,6 +1,7 @@
 {
     "machine": {
         "gpu": 0,
+        "vram": 0,
         "cpu": 1000,
         "ram": 4000
     },
@@ -25,10 +26,8 @@
             "Outputs": [
                 { "Name": "outputs", "Path": "/outputs" }
             ],
-            "PublisherSpec": { "Type": "ipfs" },
-            "Resources": { "CPU": "1", "Memory": "4000" },
+            "Resources": { "CPU": "1", "Memory": "2Gb" },
             "Timeout": 600,
-            "Wasm": { "EntryModule": {} }
         }
     }
 }
