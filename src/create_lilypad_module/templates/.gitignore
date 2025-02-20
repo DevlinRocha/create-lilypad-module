@@ -11,6 +11,7 @@ __pycache__/
 # Virtual environments
 venv/
 .env/
+.env
 
 # Build artifacts
 build/
