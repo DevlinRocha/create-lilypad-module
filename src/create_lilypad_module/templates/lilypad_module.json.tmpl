@@ -1,15 +1,11 @@
 {
-  "machine": { "gpu": 0, "vram": 0, "cpu": 1000, "ram": 4000 },
+  "machine": { "gpu": 0, "vram": 0, "cpu": 6000, "ram": 6000 },
   "job": {
     "APIVersion": "V1beta1",
-    "Metadata": {
-      "CreatedAt": "0001-01-01T00:00:00Z",
-      "Requester": {}
-    },
     "Spec": {
       "Deal": { "Concurrency": 1 },
       "Docker": {
-        "WorkingDirectory": "/workspace",
+        "WorkingDirectory": "/app",
         "Entrypoint": ["python", "/src/run_inference.py"],
         "EnvironmentVariables": ["INPUT={{ js .input }}"],
         "Image": "dockerhub_username/image:tag"
