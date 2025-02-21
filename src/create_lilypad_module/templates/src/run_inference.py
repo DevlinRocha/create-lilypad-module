@@ -20,7 +20,10 @@ def run_job(input, model, tokenizer):
             padding=True,
         )
 
-        output = {model(**inputs)}
+        output = {
+            "input": input,
+            "output": model(**inputs),
+        }
 
         return output
 
@@ -39,20 +42,22 @@ def main():
 
     input = os.environ.get("INPUT", "Default input value")
 
-    MODEL_DIRECTORY = "/models"
+    # `/app` directory aligns with the `WORKDIR` specified in the `Dockerfile`
+    model_directory = "/app/models"
 
     output = {"input": input, "status": "error"}
 
     try:
         # TODO: Initialize `model` and `tokenizer`
-        # model = AutoModelForSeq2SeqLM.from_pretrained(MODEL_DIRECTORY)
-        # tokenizer = AutoTokenizer.from_pretrained(MODEL_DIRECTORY)
+        # model = AutoModelForSeq2SeqLM.from_pretrained(model_directory)
+        # tokenizer = AutoTokenizer.from_pretrained(model_directory)
 
-        output = {
-            "input": input,
-            "result": run_job(input, model, tokenizer),
-            "status": "success",
-        }
+        output = run_job(input, model, tokenizer)
+        output.update(
+            {
+                "status": "success",
+            }
+        )
 
     except Exception as error:
         print("❌ Error during processing:", file=sys.stderr, flush=True)
