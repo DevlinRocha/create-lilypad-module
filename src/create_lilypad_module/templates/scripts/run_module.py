@@ -4,8 +4,8 @@ import subprocess
 import sys
 from config.constants import (
     DOCKER_REPO,
-    MODULE_REPO,
-    TARGET_COMMIT,
+    GITHUB_REPO,
+    GITHUB_TAG,
 )
 
 
@@ -75,7 +75,7 @@ def run_module():
             "run",
             "--network",
             "demonet",
-            f"{MODULE_REPO}:{TARGET_COMMIT}",
+            f"{GITHUB_REPO}:{GITHUB_TAG}",
             "--web3-private-key",
             DEMONET_PRIVATE_KEY,
             "-i",
@@ -85,7 +85,7 @@ def run_module():
         command = [
             "lilypad",
             "run",
-            f"{MODULE_REPO}:{TARGET_COMMIT}",
+            f"{GITHUB_REPO}:{GITHUB_TAG}",
             "--web3-private-key",
             WEB3_PRIVATE_KEY,
             "-i",

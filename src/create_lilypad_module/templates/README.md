@@ -33,8 +33,8 @@ The wallet must have enough LP tokens and Arbitrum Sepolia ETH to fund the job.
 ```python
 DOCKER_REPO = ""
 DOCKER_TAG = "latest"
-MODULE_REPO = ""
-TARGET_COMMIT = "main"
+GITHUB_REPO = ""
+GITHUB_TAG = "main"
 ```
 
 #### `DOCKER_REPO`
@@ -53,7 +53,7 @@ The specific tag of the `DOCKER_REPO` containing the module code.
 
 Default: `"latest"`
 
-#### `MODULE_REPO`
+#### `GITHUB_REPO`
 
 The URL for the GitHub repository storing the `lilypad_module.json.tmpl` file. The visibility of the repository must be public.
 
@@ -61,9 +61,11 @@ The `lilypad_module.json.tmpl` file points to a `DOCKER_REPO` and Lilypad runs t
 
 e.g. `"github.com/<github_username>/<github_repo>"`
 
-#### `TARGET_COMMIT`
+#### `GITHUB_TAG`
 
-The git branch or commit hash that contains the `lilypad_module.json.tmpl` file you want to run.
+The GitHub tag, branch, or commit hash that contains the `lilypad_module.json.tmpl` file you want to run.
+
+To ensure the most current version of your module is utilized during development and testing, it's advisable to specify a commit hash. Otherwise, the resource provider computing the job might use an outdated cached version of your module. Specifying the commit hash guarantees the latest version of your module is downloaded and used.
 
 Use `git log` to find and set this easily.
 

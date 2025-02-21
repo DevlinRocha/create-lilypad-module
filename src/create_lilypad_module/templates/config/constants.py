@@ -8,8 +8,8 @@ DOCKER_TAG = "latest"
 
 # TODO: Set the GitHub repository URL where your module is stored.
 # Example: "github.com/devlinrocha/lilypad-module-sentiment".
-MODULE_REPO = ""
+GITHUB_REPO = ""
 
-# TODO: Specify the target branch name or commit hash.
+# TODO: Specify the GitHub tag, branch, or commit hash.
 # Example: "main" or "c3ed392c11060337cae010862b1af160cd805e67"
-TARGET_COMMIT = "main"
+GITHUB_TAG = "main"
