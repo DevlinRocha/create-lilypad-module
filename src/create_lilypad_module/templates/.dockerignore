@@ -12,6 +12,7 @@ __pycache__/
 # Virtual environments
 venv/
 .env/
+.env
 
 # Testing and linting artifacts
 .pytest_cache/
