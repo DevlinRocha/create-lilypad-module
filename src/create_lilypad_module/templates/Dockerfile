@@ -6,23 +6,20 @@ RUN apt-get update && apt-get install -y --no-install-recommends \
   && rm -rf /var/lib/apt/lists/*
 
 # Set working directory
-WORKDIR /workspace
+WORKDIR /app
 
 # Install module dependencies
 COPY requirements.txt .
 RUN pip install --no-cache-dir -r requirements.txt
 
-# Create output directory
-RUN mkdir -p /outputs
-
 # Copy source code
-COPY src /src
+COPY src ./src
 
 # Copy pre-downloaded models into the container
-COPY models /models
+COPY models ./models
 
 # Set environment variables
-ENV HF_HOME=/models \
+ENV HF_HOME=/app/models \
 TRANSFORMERS_OFFLINE=1
 
 # Set entrypoint
