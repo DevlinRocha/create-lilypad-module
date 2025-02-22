@@ -19,9 +19,9 @@ def docker_build():
     )
 
     parser.add_argument(
-        "--push",
+        "--local",
         action="store_true",
-        help="Push the Docker image to Docker Hub.",
+        help="Build the Docker image and load it into the local Docker daemon.",
     )
 
     parser.add_argument(
@@ -32,7 +32,7 @@ def docker_build():
 
     args = parser.parse_args()
 
-    push = args.push
+    local = args.local
     no_cache = args.no_cache
 
     arch_map = {
@@ -44,16 +44,16 @@ def docker_build():
 
     os_arch = arch_map.get(platform.machine(), "unsupported_arch")
 
-    if not push and os_arch == "unsupported_arch":
+    if local and os_arch == "unsupported_arch":
         print(
             "❌ Error: Unsupported local architecture detected.",
             file=sys.stderr,
             flush=True,
         )
         print(
-            "⛔️ Use `--push` to push the Docker image to Docker Hub instead of building locally."
+            "⛔️ Run `docker_build` without the `--local` flag to push the Docker image to Docker Hub instead of building locally."
         )
-        print("👉 python -m scripts.docker_build --push")
+        print("👉 python -m scripts.docker_build")
         sys.exit(1)
 
     command = [
@@ -61,10 +61,10 @@ def docker_build():
         "buildx",
         "build",
         "--platform",
-        f"linux/{'amd64' if push else os_arch}",
+        f"linux/{os_arch if local else 'amd64'}",
         "-t",
         f"{DOCKER_REPO}:{DOCKER_TAG}",
-        "--push" if push else "--load",
+        "--load" if local else "--push",
         *(["--no-cache"] if no_cache else []),
         ".",
     ]
@@ -72,7 +72,7 @@ def docker_build():
     try:
         print("Building Docker image...")
         result = subprocess.run(command, check=True, text=True)
-        if push:
+        if not local:
             print("✅ Docker image built and published to Docker Hub successfully.")
         else:
             print("✅ Docker image built successfully.")
