@@ -1,0 +1,67 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE=".env"
+source $CONFIG_FILE
+
+if [ -z $DOCKER_HUB_REPO ] || [ -z $DOCKER_TAG ]; then
+  echo "Please configure your module first:"
+  echo "/scripts/configure"
+  exit 1
+fi
+
+for arg in "$@"; do
+  if [ "$arg" == "--local" ]; then
+    echo "Building the Docker image and loading it into the local Docker daemon..."
+    local=true
+  fi
+  if [ "$arg" == "--no-cache" ]; then
+    echo "Building the Docker image without using cache..."
+    no_cache=true
+  fi
+done
+
+ARCH=$(uname -m)
+
+# Initialize os_arch to a default value
+os_arch="unsupported_arch"
+
+# Use a case statement to map architectures
+case "$ARCH" in
+"arm64" | "aarch64")
+  os_arch="arm64"
+  ;;
+"x86_64" | "amd64")
+  os_arch="amd64"
+  ;;
+esac
+
+platform="linux/amd64"
+
+if [ $local ]; then
+  if [ $os_arch == "unsupported_arch" ]; then
+    echo "❌ Error: Unsupported local architecture detected."
+    echo "⛔️ Run $(build) without the $(--local) flag to push the Docker image to Docker Hub for a supported platform."
+    echo "👉 scripts/build"
+    exit 1
+  else
+    platform="linux/$os_arch"
+  fi
+fi
+
+IMAGE_NAME=$DOCKER_HUB_REPO:$DOCKER_TAG
+echo Building Docker image: $IMAGE_NAME...
+
+docker buildx build --platform $platform \
+  -t $IMAGE_NAME \
+  ${local:+--load} ${local:---push} \
+  ${no_cache:+--no-cache} \
+  .
+
+if [ -z $local ]; then
+  echo "✅ Docker image built and published to Docker Hub successfully."
+  echo -e "\thttps://hub.docker.com/repository/docker/$DOCKER_HUB_REPO/general"
+  echo -e "\n\tscripts/run_module"
+else
+  echo "✅ Docker image built and loaded into local daemon successfully."
+  echo -e "\n\tscripts/run_module --local"
+fi
