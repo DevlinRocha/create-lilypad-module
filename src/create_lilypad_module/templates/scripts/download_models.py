@@ -1,15 +1,15 @@
 import sys
 
-# TODO: Update ../requirements.txt
+# TODO: Update `../requirements.txt`.
 # from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 
 def download_models():
-    # TODO: Set this to your model's Hugging Face identifier
+    # TODO: Set this to your model's Hugging Face identifier.
     MODEL_IDENTIFIER = ""
 
     # TODO: Configure the model(s) needed for this module.
-    # Download the model(s) and tokenizer(s) for your module from the Hugging Face model hub
+    # Download the model(s) and tokenizer(s) for your module from the Hugging Face model hub.
     # https://huggingface.co/docs/hub/en/models-downloading
     if not MODEL_IDENTIFIER:
         print(
@@ -22,7 +22,7 @@ def download_models():
 
     try:
         print(f"Downloading model `{MODEL_IDENTIFIER}`...")
-        # TODO: Initialize `model` and `tokenizer`
+        # TODO: Initialize `model` and `tokenizer`.
         # tokenizer = AutoTokenizer.from_pretrained(MODEL_IDENTIFIER)
         # model = AutoModelForSequenceClassification.from_pretrained(MODEL_IDENTIFIER)
         tokenizer.save_pretrained("./models")

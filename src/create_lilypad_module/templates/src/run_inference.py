@@ -3,7 +3,7 @@ import sys
 import traceback
 import json
 
-# TODO: Update ../requirements.txt
+# TODO: Update `../requirements.txt`.
 # import torch
 # from transformers import AutoTokenizer, AutoModelForSeq2SeqLM
 
@@ -48,7 +48,7 @@ def main():
     output = {"input": input, "status": "error"}
 
     try:
-        # TODO: Initialize `model` and `tokenizer`
+        # TODO: Initialize `model` and `tokenizer`.
         # model = AutoModelForSeq2SeqLM.from_pretrained(model_directory)
         # tokenizer = AutoTokenizer.from_pretrained(model_directory)
 
