@@ -10,8 +10,8 @@ main() {
 
     # Get project name if not provided
     if [[ -z "$project_name" ]]; then
-        printf "\n🐸 Enter the name of your new project:"
-        printf "\n(Default: lilypad-module) ➡️  "
+        echo "🐸 Enter the name of your new project:"
+        printf "(Default: lilypad-module) ➔ "
         read -r project_name
         project_name="${project_name:-lilypad-module}"
     fi
@@ -21,18 +21,18 @@ main() {
 
     # Validate target directory
     if [[ -d "$target_dir" ]]; then
-        printf "❌ Error: Directory '$project_name' already exists." >&2
+        echo "❌ Error: Directory '$project_name' already exists." >&2
         exit 1
     fi
 
     # Validate templates directory
     if [[ ! -d "$templates_dir" ]]; then
-        printf "❌ Error: Templates directory not found at $templates_dir" >&2
+        echo "❌ Error: Templates directory not found at $templates_dir" >&2
         exit 1
     fi
 
     # Create project directory
-    printf "\nCreating a new Lilypad module in: $target_dir"
+    echo -e "\nCreating a new Lilypad module in: $target_dir"
     mkdir -p "$target_dir"/
 
     # Copy templates with exclusions
@@ -40,7 +40,7 @@ main() {
 
     # Initialize Git repository
     if ! git -C "$target_dir" init >/dev/null 2>&1; then
-        printf "❌ Error: Failed to initialize Git repository" >&2
+        echo "❌ Error: Failed to initialize Git repository" >&2
         exit 1
     fi
 
@@ -48,11 +48,13 @@ main() {
     chmod -R +x "$target_dir/scripts"
 
     # Success message
-    printf "\n✅ Success! Created $project_name at ./$project_name"
-    printf "\n📂 Get started by running:"
-    printf "\n\tcd $project_name/"
-    printf "\n\topen README.md"
-    printf "\n🐸 GLHF!"
+    echo -e "\n✅ Success! Created $project_name at ./$project_name"
+    echo -e "\n📂 Get started by running:"
+    echo -e "\n\tcd $project_name/"
+    echo -e "\tscripts/configure"
+    echo -e "\tscripts/build"
+    echo -e "\tscripts/run"
+    echo -e "\n🐸 GLHF!"
 }
 
 # Execute main function
