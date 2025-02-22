@@ -1,23 +1,22 @@
 import sys
+from config.constants import MODEL_IDENTIFIER
+
+# TODO: Configure the model(s) needed for your module.
+# Download the model(s) and tokenizer(s) for your module from the Hugging Face model hub.
+# https://huggingface.co/docs/hub/en/models-downloading
+# from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 # TODO: Update `../requirements.txt`.
-# from transformers import AutoTokenizer, AutoModelForSequenceClassification
 
 
 def download_models():
-    # TODO: Set this to your model's Hugging Face identifier.
-    MODEL_IDENTIFIER = ""
-
-    # TODO: Configure the model(s) needed for this module.
-    # Download the model(s) and tokenizer(s) for your module from the Hugging Face model hub.
-    # https://huggingface.co/docs/hub/en/models-downloading
     if not MODEL_IDENTIFIER:
         print(
-            "❌ Error: Model download script is not configured.",
+            "❌ Error: Model identifier is not configured.",
             file=sys.stderr,
             flush=True,
         )
-        print("👉 /scripts/download_models.py")
+        print("👉 /config/constants.py")
         sys.exit(1)
 
     try:
