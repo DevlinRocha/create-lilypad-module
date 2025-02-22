@@ -1,0 +1,12 @@
+#!/usr/bin/env bash
+
+COMMAND=$1
+shift
+
+if [ -f "scripts/$COMMAND" ]; then
+    "scripts/$COMMAND" "$@"
+else
+    echo "Available commands:"
+    echo "  ./scripts/configure                       Configure your module"
+    exit 1
+fi 
