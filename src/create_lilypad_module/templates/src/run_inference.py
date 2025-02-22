@@ -68,8 +68,8 @@ def main():
     output_path = "/outputs/result.json"
 
     try:
-        with open(output_path, "w") as f:
-            json.dump(output, f, indent=2)
+        with open(output_path, "w") as file:
+            json.dump(output, file, indent=2)
         print(
             f"✅ Successfully wrote output to {output_path}",
         )
