@@ -7,6 +7,6 @@ if [ -f "scripts/$COMMAND" ]; then
     "scripts/$COMMAND" "$@"
 else
     echo "Available commands:"
-    echo "  ./scripts/configure                       Configure your module"
+    echo "  /scripts/configure                       Configure your module"
     exit 1
-fi 
+fi
