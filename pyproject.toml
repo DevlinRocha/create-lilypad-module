@@ -6,7 +6,7 @@ build-backend = "setuptools.build_meta"
 
 [project]
 name = "create_lilypad_module"
-version = "0.1.48"
+version = "0.1.49"
 description = "Create Lilypad modules with a modern Docker setup, minimal configuration, and useful pre-written scripts."
 readme = "README.md"
 keywords = [
