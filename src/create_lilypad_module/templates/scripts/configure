@@ -1,0 +1,73 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE=".env"
+
+source $CONFIG_FILE
+
+if [[ -z "$DOCKER_HUB_USERNAME" ]]; then
+    printf "\nEnter your Docker Hub username: "
+    read -r DOCKER_HUB_USERNAME
+    DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME
+else
+    printf "\nEnter your Docker Hub username:"
+    printf "\n(Current: $DOCKER_HUB_USERNAME) ➡️  "
+    read -r NEW_DOCKER_HUB_USERNAME
+    DOCKER_HUB_USERNAME=${NEW_DOCKER_HUB_USERNAME:-$DOCKER_HUB_USERNAME}
+fi
+
+if [[ -z "$DOCKER_HUB_REPO" ]]; then
+    printf "\nEnter the name of the Docker Hub repository: "
+    read -r DOCKER_HUB_REPO
+    DOCKER_HUB_REPO=$DOCKER_HUB_REPO
+else
+    printf "\nEnter the name of the Docker Hub repository:"
+    printf "\n(Current: $DOCKER_HUB_REPO) ➡️  "
+    read -r NEW_DOCKER_HUB_REPO
+    DOCKER_HUB_REPO=${NEW_DOCKER_HUB_REPO:-$DOCKER_HUB_REPO}
+fi
+
+if [[ -z "$DOCKER_TAG" ]]; then
+    printf "\nEnter the tag for the Docker image:"
+    printf "\n(Default: \"latest\") ➡️  "
+    read -r DOCKER_TAG
+    DOCKER_TAG=${DOCKER_TAG:-\"latest\"}
+else
+    printf "\nEnter the tag for the Docker image:"
+    printf "\n(Current: $DOCKER_TAG) ➡️  "
+    read -r NEW_DOCKER_TAG
+    DOCKER_TAG=${NEW_DOCKER_TAG:-$DOCKER_TAG}
+fi
+
+if [[ -z "$GITHUB_REPO" ]]; then
+    printf "\nEnter the GitHub repository URL for the module: "
+    read -r GITHUB_REPO
+    GITHUB_REPO=$GITHUB_REPO
+else
+    printf "\nEnter the GitHub repository URL for the module: "
+    printf "\n(Current: $GITHUB_REPO) ➡️  "
+    read -r NEW_GITHUB_REPO
+    GITHUB_REPO=${NEW_GITHUB_REPO:-$GITHUB_REPO}
+fi
+
+if [[ -z "$GITHUB_TAG" ]]; then
+    printf "\nEnter the GitHub tag, branch, or commit hash:"
+    printf "\n(Default: \"main\") ➡️  "
+    read -r GITHUB_TAG
+    GITHUB_TAG=${GITHUB_TAG:-"main"}
+else
+    printf "\nEnter the GitHub tag, branch, or commit hash:"
+    printf "\n(Current: $GITHUB_TAG) ➡️  "
+    read -r NEW_GITHUB_TAG
+    GITHUB_TAG=${NEW_GITHUB_TAG:-$GITHUB_TAG}
+fi
+
+# Save Docker Hub username to config file
+cat << EOF > $CONFIG_FILE
+DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME
+DOCKER_HUB_REPO=$DOCKER_HUB_REPO
+DOCKER_TAG=$DOCKER_TAG
+GITHUB_REPO=$GITHUB_REPO
+GITHUB_TAG=$GITHUB_TAG
+EOF
+
+echo "✅ Configuration saved!"
