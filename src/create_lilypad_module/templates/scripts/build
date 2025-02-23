@@ -3,9 +3,10 @@
 CONFIG_FILE=".env"
 source $CONFIG_FILE
 
-if [ -z $DOCKER_HUB_REPO ] || [ -z $DOCKER_TAG ]; then
+if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ] || [ -z $DOCKER_HUB_REPO ] || [ -z $DOCKER_TAG ]; then
   echo "Please configure your module first:"
-  echo "/scripts/configure"
+  echo "scripts/configure"
+  echo ".env"
   exit 1
 fi
 
@@ -51,7 +52,10 @@ fi
 IMAGE_NAME=$DOCKER_HUB_REPO:$DOCKER_TAG
 echo Building Docker image: $IMAGE_NAME...
 
-docker buildx build --platform $platform \
+# Build argument for model name and version
+MODEL_ID="${MODEL_NAME}:${MODEL_VERSION}"
+
+docker buildx build --build-arg MODEL_ID=$MODEL_ID --platform $platform \
   -t $IMAGE_NAME \
   ${local:+--load} ${local:---push} \
   ${no_cache:+--no-cache} \
