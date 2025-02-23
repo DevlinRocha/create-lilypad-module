@@ -1,8 +1,8 @@
-name: Publish Python Package
+name: Publish npm Package
 
 on:
-  push:
-    paths: "pyproject.toml"
+  release:
+    types: [released]
 
 jobs:
   build-and-publish:
@@ -12,20 +12,12 @@ jobs:
       - name: Check out the code
         uses: actions/checkout@v2
 
-      - name: Set up Python
-        uses: actions/setup-python@v2
+      - name: Set up Node.js
+        uses: actions/setup-node@v4
         with:
-          python-version: "3.x"
+          node-version: "22"
 
-      - name: Install build tools
-        run: |
-          python -m pip install --upgrade pip
-          python -m pip install build
-
-      - name: Build package
-        run: python -m build
-
-      - name: Publish to PyPI
-        uses: pypa/gh-action-pypi-publish@release/v1
-        with:
-          password: ${{ secrets.PYPI_API_TOKEN }}
+      - name: Publish to npm
+        run: npm publish
+        env:
+          NODE_AUTH_TOKEN: ${{ secrets.NPM_TOKEN }}
