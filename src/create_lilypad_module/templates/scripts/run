@@ -1,0 +1,37 @@
+#!/usr/bin/env bash
+
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+    echo "Usage: scripts/run [--local] <input>"
+    echo "Example: scripts/run 'What animal order do frogs belong to?'"
+    exit 1
+fi
+
+if [ "$1" == "--local" ] || [ "$1" == "-l" ]; then
+    if [ "$#" -ne 2 ]; then
+        echo "❌ Error: Input is required."
+        echo "Example: scripts/run --local 'What animal order do frogs belong to?'"
+        exit 1
+    fi
+    echo "Running the Lilypad module Docker image locally..."
+    local=true
+    INPUT=$2
+else
+    INPUT=$1
+fi
+
+# Base64 encode the input
+JSON_INPUT="{"messages": [{"role": "user", "content": "$INPUT"}]}"
+BASE64_INPUT=$(echo "$JSON_INPUT" | base64)
+IMAGE_NAME=$DOCKER_HUB_REPO:$DOCKER_TAG
+
+if [ "$local" != true ]; then
+    echo "Running $IMAGE_NAME on Lilypad Network..."
+    echo "Original input: $JSON_INPUT"
+    echo "Base64 encoded: $BASE64_INPUT"
+    lilypad run $IMAGE_NAME -i $BASE64_INPUT
+else
+    echo "Running $IMAGE_NAME locally..."
+    echo "Original input: $JSON_INPUT"
+    echo "Base64 encoded: $BASE64_INPUT"
+    docker run $IMAGE_NAME $BASE64_INPUT
+fi
