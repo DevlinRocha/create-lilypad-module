@@ -11,11 +11,11 @@ if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ] || [ -z $DOCKER_HUB_REPO ] || [ -
 fi
 
 for arg in "$@"; do
-  if [ "$arg" == "--local" ]; then
+  if [ $arg == "--local" ]; then
     echo "Building the Docker image and loading it into the local Docker daemon..."
     local=true
   fi
-  if [ "$arg" == "--no-cache" ]; then
+  if [ $arg == "--no-cache" ]; then
     echo "Building the Docker image without using cache..."
     no_cache=true
   fi
@@ -49,14 +49,14 @@ if [ $local ]; then
   fi
 fi
 
-IMAGE_NAME=$DOCKER_HUB_REPO:$DOCKER_TAG
-echo Building Docker image: $IMAGE_NAME...
+echo Building Docker image: $DOCKER_HUB_REPO...
 
 # Build argument for model name and version
 MODEL_ID="${MODEL_NAME}:${MODEL_VERSION}"
 
 docker buildx build --build-arg MODEL_ID=$MODEL_ID --platform $platform \
-  -t $IMAGE_NAME \
+  -t $DOCKER_HUB_REPO:latest \
+  -t $DOCKER_HUB_REPO:$DOCKER_TAG \
   ${local:+--load} ${local:---push} \
   ${no_cache:+--no-cache} \
   .

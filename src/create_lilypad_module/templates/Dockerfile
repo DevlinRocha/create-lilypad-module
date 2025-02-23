@@ -1,15 +1,16 @@
 # Use the existing ollama Dockerfile as the base
 FROM ollama/ollama
 
+# Set environment variables
 ARG MODEL_ID="${MODEL_NAME}:${MODEL_VERSION}"
-ENV MODEL_ID=$MODEL_ID
+ENV MODEL_ID=$MODEL_ID \
+OLLAMA_HOST=0.0.0.0
 
 # Set the working directory
 WORKDIR /app
 
 # Update and install necessary packages
-RUN apt-get update && apt-get install -y --no-install-recommends wget curl \
-  build-essential \
+RUN apt-get update && apt-get install -y --no-install-recommends curl \
   && rm -rf /var/lib/apt/lists/*
 
 # Run ollama in the background and pull the specified model
@@ -21,9 +22,6 @@ RUN nohup bash -c "ollama serve &" && \
     ollama pull $MODEL_ID
 
 EXPOSE 11434
-
-# Set the environment variable for the ollama host
-ENV OLLAMA_HOST=0.0.0.0
 
 # Create outputs directory and set permissions
 RUN mkdir -p ./outputs && chmod 777 ./outputs

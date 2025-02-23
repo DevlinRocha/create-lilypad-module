@@ -3,14 +3,10 @@
 # Create output directory if it doesn't exist
 mkdir -p /outputs
 
-# Parse base64 input argument and decode to JSON
-echo "Raw input (base64): $1" >&2
-input_json=$(echo "$1" | base64 -d || echo "{}")
+echo "Input: $1" >&2
 
 # Extract values from input JSON with defaults
-messages=$(echo "$input_json" | jq -r '.messages // empty' || echo '[{"role":"user","content":"How can you help me?"}]')
-temperature=$(echo "$input_json" | jq -r '.temperature // empty' || echo "0.8")
-max_tokens=$(echo "$input_json" | jq -r '.max_tokens // empty' || echo "2048")
+messages="[{\"role\": \"user\", \"content\": \"$1\"}]"
 
 # Start the ollama server in the background
 echo "Starting Ollama server..." >&2
@@ -38,8 +34,8 @@ request=$(
 {
   "model": "$MODEL_ID",
   "messages": $messages,
-  "temperature": $temperature,
-  "max_tokens": $max_tokens,
+  "temperature": 0.8,
+  "max_tokens": 2048,
   "stream": false
 }
 EOF
@@ -73,8 +69,7 @@ formatted_response="{
 # Save debug info
 {
     echo "=== Debug Info ==="
-    echo "Input (base64): $1"
-    echo "Decoded input: $input_json"
+    echo "Input: $1"
     echo "Request to Ollama: $request"
     echo "Response from Ollama:"
     echo "$response"

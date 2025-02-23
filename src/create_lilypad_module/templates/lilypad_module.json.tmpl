@@ -6,8 +6,7 @@
       "Deal": { "Concurrency": 1 },
       "Docker": {
         "WorkingDirectory": "/app",
-        "Entrypoint": ["/app/src/run_model"],
-        "EnvironmentVariables": ["INPUT={{ js .input }}"],
+        "Entrypoint": ["/app/src/run_model", {{ .prompt }}],
         "Image": "dockerhub_username/image:tag"
       },
       "Engine": "Docker",
