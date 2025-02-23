@@ -3,6 +3,28 @@
 CONFIG_FILE=".env"
 source $CONFIG_FILE
 
+if [[ -z "$MODEL_NAME" ]]; then
+    printf "\nEnter the model name for your module: "
+    read -r MODEL_NAME
+    MODEL_NAME=$MODEL_NAME
+else
+    printf "\nEnter the model name for your module:"
+    printf "\n(Current: $MODEL_NAME) ➡️  "
+    read -r NEW_MODEL_NAME
+    MODEL_NAME=${NEW_MODEL_NAME:-$MODEL_NAME}
+fi
+
+if [[ -z "$MODEL_VERSION" ]]; then
+    printf "\nEnter the model version for your module: "
+    read -r MODEL_VERSION
+    MODEL_VERSION=$MODEL_VERSION
+else
+    printf "\nEnter the model version for your module:"
+    printf "\n(Current: $MODEL_VERSION) ➡️  "
+    read -r NEW_MODEL_VERSION
+    MODEL_VERSION=${NEW_MODEL_VERSION:-$MODEL_VERSION}
+fi
+
 if [[ -z "$DOCKER_HUB_USERNAME" ]]; then
     printf "\nEnter your Docker Hub username: "
     read -r DOCKER_HUB_USERNAME
@@ -60,22 +82,15 @@ else
     GITHUB_TAG=${NEW_GITHUB_TAG:-$GITHUB_TAG}
 fi
 
-if [[ -z "$WEB3_PRIVATE_KEY" ]]; then
-    printf "\nEnter your Web3 private key: "
-    read -r NEW_WEB3_PRIVATE_KEY
-    WEB3_PRIVATE_KEY=${NEW_WEB3_PRIVATE_KEY:-$WEB3_PRIVATE_KEY}
-fi
-
 # Save Docker Hub username to config file
 cat <<EOF >$CONFIG_FILE
+MODEL_NAME=$MODEL_NAME
+MODEL_VERSION=$MODEL_VERSION
 DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME
 DOCKER_HUB_REPO=$DOCKER_HUB_REPO
 DOCKER_TAG=$DOCKER_TAG
 GITHUB_REPO=$GITHUB_REPO
 GITHUB_TAG=$GITHUB_TAG
-# 🚨 Do not share or commit this key! 🚨
-WEB3_PRIVATE_KEY=$WEB3_PRIVATE_KEY
-DEMONET_PRIVATE_KEY="0ec38dd1ee0898dae8460b269859b4fb3cb519b35d82014c909ec4741c790831"
 EOF
 
 echo "✅ Configuration saved!"
