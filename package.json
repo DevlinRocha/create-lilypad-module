@@ -1,0 +1,24 @@
+{
+  "name": "create-lilypad-module",
+  "version": "0.0.25",
+  "description": "Create Lilypad modules with a modern Docker setup and minimal configuration.",
+  "bin": {
+    "create-lilypad-module": "src/create_lilypad_module/scaffold"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/DevlinRocha/create-lilypad-module.git"
+  },
+  "bugs": {
+    "url": "https://github.com/DevlinRocha/create-lilypad-module/issues"
+  },
+  "keywords": [
+    "Lilypad",
+    "Lilypad Network",
+    "Lilypad module"
+  ],
+  "author": "Devlin Rocha",
+  "files": [
+    "src/create_lilypad_module/templates"
+  ]
+}
