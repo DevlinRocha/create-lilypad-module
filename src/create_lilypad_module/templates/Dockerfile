@@ -1,7 +1,8 @@
-ARG MODEL_ID
-
 # Use the existing ollama Dockerfile as the base
 FROM ollama/ollama
+
+ARG MODEL_ID="${MODEL_NAME}:${MODEL_VERSION}"
+ENV MODEL_ID=$MODEL_ID
 
 # Set the working directory
 WORKDIR /app
