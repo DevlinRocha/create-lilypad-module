@@ -7,7 +7,8 @@ if [ -f "scripts/$COMMAND" ]; then
     "scripts/$COMMAND" "$@"
 else
     echo "Available commands:"
-    echo -e "\tscripts/configure                       Configure your module"
-    echo -e "\tscripts/build                           Build and push a new Docker image"
+    echo -e "\tscripts/configure                Configure the module"
+    echo -e "\tscripts/build                    Build and push a new Docker image"
+    echo -e "\tscripts/run [--local] <input>    Run the module"
     exit 1
 fi
