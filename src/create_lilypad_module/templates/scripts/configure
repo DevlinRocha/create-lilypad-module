@@ -38,7 +38,6 @@ fi
 
 if [[ -z $DOCKER_IMAGE ]]; then
     if [ -n "$MODEL_NAME" ] && [ -n "$MODEL_VERSION" ]; then
-        printf "LOOK HERE: $MODEL_NAME-$MODEL_VERSION"
         printf "\nEnter the name of the Docker image:"
         printf "\n(Default: $MODEL_NAME-$MODEL_VERSION) ➡️ "
         read -r DOCKER_IMAGE
