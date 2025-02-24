@@ -42,9 +42,13 @@ DOCKER_IMAGE
 GITHUB_REPO
 ```
 
-### [`scripts/build [--local]`](scripts/build)
+### [`scripts/build [--major] [--minor] [--patch] [--local]`](scripts/build)
 
 Builds the Docker image and pushes it to Docker Hub.
+
+### `--major`, `--minor`, and `--patch` Flags
+
+Increment the specified version before building the Docker image.
 
 #### `--local` Flag
 
