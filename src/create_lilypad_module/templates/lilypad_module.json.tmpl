@@ -8,7 +8,7 @@
         "WorkingDirectory": "/app",
         "Entrypoint": [
           "/app/src/run_model",
-          "--prompt", {{.prompt}},
+          "--prompt", {{.prompt}}
           {{ if .temperature }} "--temperature", {{ .temperature }} {{ end }}
           {{ if .max_tokens }} "--max_tokens", {{ .max_tokens }} {{ end }}
         ],
