@@ -3,6 +3,8 @@
 CONFIG_FILE=".env"
 source $CONFIG_FILE
 
+VERSION=${DOCKER_TAG:-v0.0.0}
+
 if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ] || [ -z $DOCKER_IMAGE ]; then
   echo "Please configure your module first:"
   echo "scripts/configure"
@@ -17,7 +19,6 @@ for arg in $@; do
   fi
 
   if [ $arg == "--major" ] || [ $arg == "--minor" ] || [ $arg == "--patch" ]; then
-    VERSION=${DOCKER_TAG:-v0.0.0}
     SEMVER=${VERSION:1}
     MAJOR=$(echo $SEMVER | cut -d. -f1)
     MINOR=$(echo $SEMVER | cut -d. -f2)
@@ -42,8 +43,6 @@ for arg in $@; do
     echo "Building the Docker image without using cache..."
     no_cache=true
   fi
-  else
-  VERSION=${DOCKER_TAG:-v0.0.0}
 done
 
 ARCH=$(uname -m)
