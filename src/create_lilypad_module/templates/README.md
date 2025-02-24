@@ -19,7 +19,7 @@ Set the following values in the [`.env` file](.env)
 MODEL_NAME
 MODEL_VERSION
 DOCKER_HUB_USERNAME
-DOCKER_HUB_REPO
+DOCKER_IMAGE
 DOCKER_TAG
 GITHUB_REPO
 GITHUB_TAG
@@ -37,9 +37,9 @@ The version of the model your module will use.
 
 Your Docker Hub username.
 
-#### `DOCKER_HUB_REPO`
+#### `DOCKER_IMAGE`
 
-The name of the Docker Hub repository.
+The name of the Docker image.
 
 #### `DOCKER_TAG`
 

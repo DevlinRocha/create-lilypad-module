@@ -19,16 +19,16 @@ else
     INPUT=$1
 fi
 
-IMAGE_NAME=$DOCKER_HUB_REPO:$DOCKER_TAG
-
 if [ $local != true ]; then
-    echo "Running $IMAGE_NAME on Lilypad Network..."
+    MODULE=$GITHUB_REPO:$GITHUB_TAG
+    echo "Running $MODULE on Lilypad Network..."
     echo "Original input: $JSON_INPUT"
     echo "Base64 encoded: $BASE64_INPUT"
-    lilypad run $GITHUB_REPO:$GITHUB_TAG -i prompt=$INPUT
+    lilypad run $MODULE -i prompt=$INPUT
 else
-    echo "Running $IMAGE_NAME locally..."
+    MODULE=$DOCKER_IMAGE:$DOCKER_TAG
+    echo "Running $MODULE locally..."
     echo "Original input: $JSON_INPUT"
     echo "Base64 encoded: $BASE64_INPUT"
-    docker run $IMAGE_NAME $BASE64_INPUT
+    docker run $MODULE $INPUT
 fi
