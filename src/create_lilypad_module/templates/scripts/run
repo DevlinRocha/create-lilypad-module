@@ -1,0 +1,36 @@
+#!/usr/bin/env bash
+
+if [ "$#" -lt 1 ] || [ "$#" -gt 2 ]; then
+    echo "Usage: scripts/run [--local] <input>"
+    echo "Example: scripts/run 'What animal order do frogs belong to?'"
+    exit 1
+fi
+
+if [ $1 == "--local" ] || [ $1 == "-l" ]; then
+    if [ "$#" -ne 2 ]; then
+        echo "❌ Error: Input is required."
+        echo "Example: scripts/run --local 'What animal order do frogs belong to?'"
+        exit 1
+    fi
+    echo "Running the Lilypad module Docker image locally..."
+    local=true
+    INPUT=$2
+else
+    INPUT=$1
+fi
+
+commit_hash=$(git log --pretty=format:%H | head -n 1)
+
+if [ $local != true ]; then
+    MODULE=$GITHUB_REPO:$commit_hash
+    echo "Running $MODULE on Lilypad Network..."
+    echo "Original input: $JSON_INPUT"
+    echo "Base64 encoded: $BASE64_INPUT"
+    lilypad run $MODULE -i prompt=$INPUT
+else
+    MODULE=$DOCKER_IMAGE:$VERSION
+    echo "Running $MODULE locally..."
+    echo "Original input: $JSON_INPUT"
+    echo "Base64 encoded: $BASE64_INPUT"
+    docker run $MODULE $INPUT
+fi
