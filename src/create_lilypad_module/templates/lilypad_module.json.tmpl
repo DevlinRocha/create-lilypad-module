@@ -9,8 +9,12 @@
         "Entrypoint": [
           "/app/src/run_model",
           "--prompt", {{ .prompt }}
-          {{ if .temperature }} "--temperature", {{ .temperature }} {{ end }}
-          {{ if .max_tokens }} "--max_tokens", {{ .max_tokens }} {{ end }}
+          {{- if .temperature -}},
+          "--temperature", {{ .temperature }}
+          {{- end -}}
+          {{- if .max_tokens -}},
+          "--max_tokens", {{ .max_tokens }}
+          {{- end -}}
         ],
         "Image": "dockerhub_username/image:tag"
       },
