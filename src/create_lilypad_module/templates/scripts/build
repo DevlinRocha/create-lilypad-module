@@ -37,6 +37,7 @@ for arg in $@; do
 
     VERSION="v$MAJOR.$MINOR.$PATCH"
     echo "New version: $VERSION"
+    sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
   fi
 
   if [ $arg == "--no-cache" ]; then
