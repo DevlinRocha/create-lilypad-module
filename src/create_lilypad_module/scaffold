@@ -9,7 +9,7 @@ main() {
     local target_dir templates_dir
 
     # Get project name if not provided
-    if [[ -z "$project_name" ]]; then
+    if [[ -z $project_name ]]; then
         echo "🐸 Enter the name of your new project:"
         printf "(Default: lilypad-module) ➔ "
         read -r project_name
@@ -20,13 +20,13 @@ main() {
     templates_dir="${SCRIPT_DIR}/templates"
 
     # Validate target directory
-    if [[ -d "$target_dir" ]]; then
+    if [[ -d $target_dir ]]; then
         echo "❌ Error: Directory '$project_name' already exists." >&2
         exit 1
     fi
 
     # Validate templates directory
-    if [[ ! -d "$templates_dir" ]]; then
+    if [[ ! -d $templates_dir ]]; then
         echo "❌ Error: Templates directory not found at $templates_dir" >&2
         exit 1
     fi
@@ -39,7 +39,7 @@ main() {
     rsync -aq "${templates_dir}/" "${target_dir}/"
 
     # Initialize Git repository
-    if ! git -C "$target_dir" init >/dev/null 2>&1; then
+    if ! git -C $target_dir init >/dev/null 2>&1; then
         echo "❌ Error: Failed to initialize Git repository" >&2
         exit 1
     fi

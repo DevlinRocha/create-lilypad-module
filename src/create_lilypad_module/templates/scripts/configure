@@ -3,29 +3,29 @@
 CONFIG_FILE=".env"
 source $CONFIG_FILE
 
-if [[ -z "$MODEL_NAME" ]]; then
-    printf "\nEnter the model name for your module: "
+if [[ -z $MODEL_NAME ]]; then
+    printf "\nEnter the name of the model your module will use: "
     read -r MODEL_NAME
     MODEL_NAME=$MODEL_NAME
 else
-    printf "\nEnter the model name for your module:"
+    printf "\nEnter the name of the model your module will use:"
     printf "\n(Current: $MODEL_NAME) ➡️  "
     read -r NEW_MODEL_NAME
     MODEL_NAME=${NEW_MODEL_NAME:-$MODEL_NAME}
 fi
 
-if [[ -z "$MODEL_VERSION" ]]; then
-    printf "\nEnter the model version for your module: "
+if [[ -z $MODEL_VERSION ]]; then
+    printf "\nEnter the version of the model your module will use: "
     read -r MODEL_VERSION
     MODEL_VERSION=$MODEL_VERSION
 else
-    printf "\nEnter the model version for your module:"
+    printf "\nEnter the version of the model your module will use:"
     printf "\n(Current: $MODEL_VERSION) ➡️  "
     read -r NEW_MODEL_VERSION
     MODEL_VERSION=${NEW_MODEL_VERSION:-$MODEL_VERSION}
 fi
 
-if [[ -z "$DOCKER_HUB_USERNAME" ]]; then
+if [[ -z $DOCKER_HUB_USERNAME ]]; then
     printf "\nEnter your Docker Hub username: "
     read -r DOCKER_HUB_USERNAME
     DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME
@@ -36,7 +36,7 @@ else
     DOCKER_HUB_USERNAME=${NEW_DOCKER_HUB_USERNAME:-$DOCKER_HUB_USERNAME}
 fi
 
-if [[ -z "$DOCKER_HUB_REPO" ]]; then
+if [[ -z $DOCKER_HUB_REPO ]]; then
     printf "\nEnter the name of the Docker Hub repository: "
     read -r DOCKER_HUB_REPO
     DOCKER_HUB_REPO=$DOCKER_HUB_REPO
@@ -47,11 +47,11 @@ else
     DOCKER_HUB_REPO=${NEW_DOCKER_HUB_REPO:-$DOCKER_HUB_REPO}
 fi
 
-if [[ -z "$DOCKER_TAG" ]]; then
+if [[ -z $DOCKER_TAG ]]; then
     printf "\nEnter the tag for the Docker image:"
-    printf "\n(Default: \"latest\") ➡️  "
+    printf "\n(Default: latest) ➡️  "
     read -r DOCKER_TAG
-    DOCKER_TAG=${DOCKER_TAG:-\"latest\"}
+    DOCKER_TAG=${DOCKER_TAG:-latest}
 else
     printf "\nEnter the tag for the Docker image:"
     printf "\n(Current: $DOCKER_TAG) ➡️  "
@@ -59,8 +59,9 @@ else
     DOCKER_TAG=${NEW_DOCKER_TAG:-$DOCKER_TAG}
 fi
 
-if [[ -z "$GITHUB_REPO" ]]; then
-    printf "\nEnter the GitHub repository URL for the module: "
+if [[ -z $GITHUB_REPO ]]; then
+    printf "\nEnter the GitHub repository URL for the module:"
+    printf "\n(Example: github.com/github_username/module_repo) ➡️  "
     read -r GITHUB_REPO
     GITHUB_REPO=$GITHUB_REPO
 else
@@ -70,7 +71,7 @@ else
     GITHUB_REPO=${NEW_GITHUB_REPO:-$GITHUB_REPO}
 fi
 
-if [[ -z "$GITHUB_TAG" ]]; then
+if [[ -z $GITHUB_TAG ]]; then
     printf "\nEnter the GitHub tag, branch, or commit hash:"
     printf "\n(Default: \"main\") ➡️  "
     read -r GITHUB_TAG
