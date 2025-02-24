@@ -28,7 +28,7 @@ if [ $local != true ]; then
     echo "Base64 encoded: $BASE64_INPUT"
     lilypad run $MODULE -i prompt=$INPUT
 else
-    MODULE=$DOCKER_IMAGE:$DOCKER_TAG
+    MODULE=$DOCKER_IMAGE:$VERSION
     echo "Running $MODULE locally..."
     echo "Original input: $JSON_INPUT"
     echo "Base64 encoded: $BASE64_INPUT"

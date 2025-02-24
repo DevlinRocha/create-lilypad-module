@@ -3,7 +3,7 @@
 CONFIG_FILE=".env"
 source $CONFIG_FILE
 
-VERSION=${DOCKER_TAG:-v0.0.0}
+VERSION=${VERSION:-v0.0.0}
 
 if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ] || [ -z $DOCKER_IMAGE ]; then
   echo "Please configure your module first:"
