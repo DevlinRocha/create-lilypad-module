@@ -6,7 +6,12 @@
       "Deal": { "Concurrency": 1 },
       "Docker": {
         "WorkingDirectory": "/app",
-        "Entrypoint": ["/app/src/run_model", {{ .prompt }}],
+        "Entrypoint": [
+          "/app/src/run_model",
+          "--prompt", {{.prompt}},
+          {{ if .temperature }} "--temperature", {{ .temperature }} {{ end }}
+          {{ if .max_tokens }} "--max_tokens", {{ .max_tokens }} {{ end }}
+        ],
         "Image": "dockerhub_username/image:tag"
       },
       "Engine": "Docker",

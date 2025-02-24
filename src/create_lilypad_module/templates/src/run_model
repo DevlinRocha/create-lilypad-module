@@ -1,12 +1,39 @@
 #!/usr/bin/env bash
 
+# Initialize default values
+PROMPT=""
+TEMPERATURE="0.7"
+MAX_TOKENS="2048"
+
 # Create output directory if it doesn't exist
 mkdir -p /outputs
 
 echo "Input: $1" >&2
 
+# Parse command-line arguments
+while [[ $# -gt 0 ]]; do
+    case "$1" in
+    --prompt)
+        PROMPT="$2"
+        shift 2
+        ;;
+    --temperature)
+        TEMPERATURE="$2"
+        shift 2
+        ;;
+    --max_tokens)
+        MAX_TOKENS="$2"
+        shift 2
+        ;;
+    *)
+        echo "Unknown flag: $1" >&2
+        exit 1
+        ;;
+    esac
+done
+
 # Extract values from input JSON with defaults
-messages="[{\"role\": \"user\", \"content\": \"$1\"}]"
+messages="[{\"role\": \"user\", \"content\": \"$PROMPT\"}]"
 
 # Start the ollama server in the background
 echo "Starting Ollama server..." >&2
@@ -34,8 +61,8 @@ request=$(
 {
   "model": "$MODEL_ID",
   "messages": $messages,
-  "temperature": 0.8,
-  "max_tokens": 2048,
+  "temperature": $TEMPERATURE,
+  "max_tokens": $MAX_TOKENS,
   "stream": false
 }
 EOF
