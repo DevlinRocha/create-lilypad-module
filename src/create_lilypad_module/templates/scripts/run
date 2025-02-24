@@ -19,8 +19,10 @@ else
     INPUT=$1
 fi
 
+commit_hash=$(git log --pretty=format:%H | head -n 1)
+
 if [ $local != true ]; then
-    MODULE=$GITHUB_REPO:$GITHUB_TAG
+    MODULE=$GITHUB_REPO:$commit_hash
     echo "Running $MODULE on Lilypad Network..."
     echo "Original input: $JSON_INPUT"
     echo "Base64 encoded: $BASE64_INPUT"

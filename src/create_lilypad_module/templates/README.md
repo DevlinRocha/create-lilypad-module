@@ -41,7 +41,6 @@ DOCKER_HUB_USERNAME
 DOCKER_IMAGE
 DOCKER_TAG
 GITHUB_REPO
-GITHUB_TAG
 ```
 
 ### [`scripts/build [--local]`](scripts/build)

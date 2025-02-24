@@ -78,18 +78,6 @@ else
     GITHUB_REPO=${NEW_GITHUB_REPO:-$GITHUB_REPO}
 fi
 
-if [[ -z $GITHUB_TAG ]]; then
-    printf "\nEnter the GitHub tag or commit hash:"
-    printf "\nUse \`git log\` to easily find commit hashes. ➡️ "
-    read -r GITHUB_TAG
-    GITHUB_REPO=$GITHUB_REPO
-else
-    printf "\nEnter the GitHub tag, branch, or commit hash:"
-    printf "\n(Current: $GITHUB_TAG) ➡️ "
-    read -r NEW_GITHUB_TAG
-    GITHUB_TAG=${NEW_GITHUB_TAG:-$GITHUB_TAG}
-fi
-
 # Save Docker Hub username to config file
 cat <<EOF >$CONFIG_FILE
 MODEL_NAME=$MODEL_NAME
@@ -98,7 +86,6 @@ DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME
 DOCKER_IMAGE=$DOCKER_IMAGE
 DOCKER_TAG=$DOCKER_TAG
 GITHUB_REPO=$GITHUB_REPO
-GITHUB_TAG=$GITHUB_TAG
 EOF
 
 echo "✅ Configuration saved!"
