@@ -7,7 +7,7 @@
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/DevlinRocha/create-lilypad-module.git"
+    "url": "https://github.com/DevlinRocha/create-lilypad-module.git"
   },
   "bugs": {
     "url": "https://github.com/DevlinRocha/create-lilypad-module/issues"
