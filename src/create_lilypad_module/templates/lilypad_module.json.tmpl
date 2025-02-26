@@ -7,16 +7,9 @@
       "Docker": {
         "WorkingDirectory": "/app",
         "Entrypoint": [
-          "/app/src/run_model",
-          "--prompt", {{ .prompt }}
-          {{- if .temperature -}},
-          "--temperature", {{ .temperature }}
-          {{- end -}}
-          {{- if .max_tokens -}},
-          "--max_tokens", {{ .max_tokens }}
-          {{- end -}}
+          "/app/src/run_model", {{ .input }}
         ],
-        "Image": "dockerhub_username/image:tag"
+        "Image": "dockerhub_username/image:v0.0.0"
       },
       "Engine": "Docker",
       "Network": { "Type": "None" },

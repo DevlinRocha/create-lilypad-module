@@ -1,39 +1,30 @@
 #!/usr/bin/env bash
 
 # Initialize default values
-PROMPT=""
-TEMPERATURE="0.7"
-MAX_TOKENS="2048"
+temperature="0.8"
+num_ctx="2048"
+num_predict="-1"
 
 # Create output directory if it doesn't exist
 mkdir -p /outputs
 
-echo "Input: $1" >&2
+# Parse base64 input argument and decode to JSON
+echo "Raw input (base64): $1" >&2
+input_json=$(echo "$1" | base64 --d)
 
-# Parse command-line arguments
-while [[ $# -gt 0 ]]; do
-    case "$1" in
-    --prompt)
-        PROMPT="$2"
-        shift 2
-        ;;
-    --temperature)
-        TEMPERATURE="$2"
-        shift 2
-        ;;
-    --max_tokens)
-        MAX_TOKENS="$2"
-        shift 2
-        ;;
-    *)
-        echo "Unknown flag: $1" >&2
-        exit 1
-        ;;
-    esac
-done
+# Parse arguments
+prompt=$(echo "$input_json" | sed -n 's/.*"prompt":[[:space:]]*"\([^"]*\)".*/\1/p')
+system=$(echo "$input_json" | sed -n 's/.*"system":[[:space:]]*"\([^"]*\)".*/\1/p')
+temperature=$(echo "$input_json" | sed -n 's/.*"temperature":[[:space:]]*"\([^"]*\)".*/\1/p')
+num_ctx=$(echo "$input_json" | sed -n 's/.*"num_ctx":[[:space:]]*"\([^"]*\)".*/\1/p')
+num_predict=$(echo "$input_json" | sed -n 's/.*"num_predict":[[:space:]]*"\([^"]*\)".*/\1/p')
 
-# Extract values from input JSON with defaults
-messages="[{\"role\": \"user\", \"content\": \"$PROMPT\"}]"
+if [[ -z "$prompt" ]]; then
+    echo "❌ Error: Prompt is required" >&2
+    exit 1
+fi
+
+echo "Prompt: $prompt" >&2
 
 # Start the ollama server in the background
 echo "Starting Ollama server..." >&2
@@ -42,7 +33,7 @@ nohup bash -c "ollama serve &" >&2
 # Wait for server with timeout
 timeout=30
 start_time=$(date +%s)
-while ! curl -s http://127.0.0.1:11434 >/dev/null; do
+while ! curl -s http://127.0.0.1:11434 >/dev/null 2>&1; do
     current_time=$(date +%s)
     elapsed=$((current_time - start_time))
     if [ $elapsed -gt $timeout ]; then
@@ -55,15 +46,30 @@ done
 
 echo "Ollama server started" >&2
 
+# Prepare the messages array
+if [[ -z "$system" ]]; then
+    messages=(
+        "[{\"role\": \"user\", \"content\": \"$prompt\"}]"
+    )
+else
+    messages=(
+        "[{\"role\": \"system\", \"content\": \"$system\"},
+        {\"role\": \"user\", \"content\": \"$prompt\"}]"
+    )
+fi
+
 # Prepare the chat completion request
 request=$(
     cat <<EOF
 {
   "model": "$MODEL_ID",
   "messages": $messages,
-  "temperature": $TEMPERATURE,
-  "max_tokens": $MAX_TOKENS,
-  "stream": false
+  "stream": false,
+  "options": {
+    "temperature": $temperature,
+    "num_ctx": $num_ctx,
+    "num_predict": $num_predict
+  }
 }
 EOF
 )
@@ -77,27 +83,29 @@ response=$(curl -s http://127.0.0.1:11434/api/chat \
 # Create JSON structure following OpenAI format
 escaped_response=$(echo "$response" | sed 's/"/\\"/g')
 formatted_response="{
-    \"id\": \"cmpl-$(openssl rand -hex 12)\",
-    \"object\": \"text_completion\",
-    \"created\": "$(date +%s)",
-    \"model\": \"$MODEL_ID\",
-    \"choices\": [{
-        \"text\": \"$escaped_response\",
-        \"index\": 0,
-        \"logprobs\": null,
-        \"finish_reason\": \"stop\"
+    'id': 'cmpl-$(openssl rand -hex 12)',
+    'object': 'text_completion',
+    'created': "$(date +%s)",
+    'model': '$MODEL_ID',
+    'choices': [{
+        'text': '$escaped_response',
+        'index': 0,
+        'logprobs': null,
+        'finish_reason': 'stop'
     }],
-    \"usage\": {
-        \"prompt_tokens\": null,
-        \"completion_tokens\": null,
-        \"total_tokens\": null
+    'usage': {
+        'prompt_tokens': null,
+        'completion_tokens': null,
+        'total_tokens': null
     }
 }"
 
 # Save debug info
 {
     echo "=== Debug Info ==="
-    echo "Input: $1"
+    date
+    echo "System: $system"
+    echo "Input: $prompt"
     echo "Request to Ollama: $request"
     echo "Response from Ollama:"
     echo "$response"
