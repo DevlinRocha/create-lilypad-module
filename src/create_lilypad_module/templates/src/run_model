@@ -23,12 +23,63 @@ top_k=$(echo "$input_json" | sed -n 's/.*"top_k":[[:space:]]*"\([^"]*\)".*/\1/p'
 top_p=$(echo "$input_json" | sed -n 's/.*"top_p":[[:space:]]*"\([^"]*\)".*/\1/p')
 min_p=$(echo "$input_json" | sed -n 's/.*"min_p":[[:space:]]*"\([^"]*\)".*/\1/p')
 
+# Initialize default values
+mirostat=${mirostat:-"0"}
+mirostat_eta=${mirostat_eta:-"0.1"}
+mirostat_tau=${mirostat_tau:-"5.0"}
+num_ctx=${num_ctx:-"2048"}
+repeat_last_n=${repeat_last_n:-"64"}
+repeat_penalty=${repeat_penalty:-"1.1"}
+temperature=${temperature:-"0.8"}
+seed=${seed:-"0"}
+num_predict=${num_predict:-"-1"}
+top_k=${top_k:-"40"}
+top_p=${top_p:-"0.9"}
+min_p=${min_p:-"0.0"}
+
 if [[ -z "$prompt" ]]; then
     echo "❌ Error: Prompt is required" >&2
     exit 1
 fi
 
 echo "Prompt: $prompt" >&2
+
+# Prepare the messages array
+if [[ -z "$system" ]]; then
+    messages=(
+        "[{\"role\": \"user\", \"content\": \"$prompt\"}]"
+    )
+else
+    messages=(
+        "[{\"role\": \"system\", \"content\": \"$system\"},
+        {\"role\": \"user\", \"content\": \"$prompt\"}]"
+    )
+fi
+
+# Prepare the chat completion request
+request=$(
+    cat <<EOF
+{
+  "model": "$MODEL_ID",
+  "messages": $messages,
+  "stream": false,
+  "options": {
+    "mirostat": $mirostat,
+    "mirostat_eta": $mirostat_eta,
+    "mirostat_tau": $mirostat_tau,
+    "num_ctx": $num_ctx,
+    "repeat_last_n": $repeat_last_n,
+    "repeat_penalty": $repeat_penalty,
+    "temperature": $temperature,
+    "seed": $seed,
+    "num_predict": $num_predict,
+    "top_k": $top_k,
+    "top_p": $top_p,
+    "min_p": $min_p
+  }
+}
+EOF
+)
 
 # Start the ollama server in the background
 echo "Starting Ollama server..." >&2
@@ -49,43 +100,6 @@ while ! curl -s http://127.0.0.1:11434 >/dev/null 2>&1; do
 done
 
 echo "Ollama server started" >&2
-
-# Prepare the messages array
-if [[ -z "$system" ]]; then
-    messages=(
-        "[{\"role\": \"user\", \"content\": \"$prompt\"}]"
-    )
-else
-    messages=(
-        "[{\"role\": \"system\", \"content\": \"$system\"},
-        {\"role\": \"user\", \"content\": \"$prompt\"}]"
-    )
-fi
-
-# Prepare the chat completion request
-request=$(
-    cat <<EOF
-{
-  "model": $MODEL_ID,
-  "messages": $messages,
-  "stream": false,
-  "options": {
-    "mirostat": $mirostat,
-    "mirostat_eta": $mirostat_eta,
-    "mirostat_tau": $mirostat_tau,
-    "num_ctx": $num_ctx,
-    "repeat_last_n": $repeat_last_n,
-    "repeat_penalty": $repeat_penalty,
-    "temperature": $temperature,
-    "seed": $seed,
-    "num_predict": $num_predict,
-    "top_k": $top_k,
-    "top_p": $top_p,
-    "min_p": $min_p
-  }
-}
-EOF
-)
 
 # Make the API call to Ollama's chat endpoint
 echo "Making request to Ollama..." >&2
