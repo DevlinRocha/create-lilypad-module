@@ -15,9 +15,9 @@ To build and run a module on Lilypad Network, you'll need to have the [Lilypad C
 
 Your module's ready! 🎉
 
-Once your Docker image has been pushed to Docker Hub, you can run your module on Lilypad Network:
+Once your Docker image has been pushed to Docker Hub, you can run your module on Lilypad Network.
 
-> Run `git log` in your terminal to easily find the latest commit hash to use as the GitHub tag.
+> Make sure that you Base64 encode your input.
 
 ```sh
 export WEB3_PRIVATE_KEY=WEB3_PRIVATE_KEY
