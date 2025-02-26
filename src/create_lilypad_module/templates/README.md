@@ -22,8 +22,20 @@ Once your Docker image has been pushed to Docker Hub, you can run your module on
 ```sh
 export WEB3_PRIVATE_KEY=WEB3_PRIVATE_KEY
 
-lilypad run github.com/github_username/module_repo:github_tag -i prompt="What animal order do frogs belong to"
+lilypad run github.com/github_username/module_repo:v0.0.0 -i input=$(echo '{"prompt": "Which animal order do frogs belong to?", "system": "You are a helpful AI assistant", "temperature": "0.4" | base64 -w 0)
 ```
+
+### Valid Parameters and Default Values
+
+> \* === Required
+
+| Parameter   | Description                                                                                          | Default Value |
+| ----------- | ---------------------------------------------------------------------------------------------------- | ------------- |
+| prompt\*    | Message from the user.                                                                               | `""`          |
+| system      | System prompt for the model.                                                                         | `""`          |
+| num_ctx     | Sets the size of the context window used to generate the next token.                                 | `2048`        |
+| temperature | The temperature of the model. Increasing the temperature will make the model answer more creatively. | `0.8`         |
+| num_predict | Maximum number of tokens to predict when generating text.                                            | `-1`          |
 
 ## Available Scripts
 
