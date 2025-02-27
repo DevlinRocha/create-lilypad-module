@@ -37,7 +37,6 @@ for arg in $@; do
 
     VERSION="v$MAJOR.$MINOR.$PATCH"
     echo "New version: $VERSION"
-    sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
   fi
 
   if [ $arg == "--no-cache" ]; then
@@ -91,6 +90,7 @@ if [ -z $local ]; then
   echo "✅ Docker image built and published to Docker Hub successfully."
   echo -e "\thttps://hub.docker.com/repository/docker/$DOCKER_HUB_REPO/general"
   echo -e "\n\tscripts/run_module"
+  sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
 else
   echo "✅ Docker image built and loaded into local daemon successfully."
   echo -e "\n\tscripts/run_module --local"
