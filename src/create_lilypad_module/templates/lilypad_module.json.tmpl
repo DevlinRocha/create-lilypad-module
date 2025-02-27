@@ -7,7 +7,7 @@
       "Docker": {
         "WorkingDirectory": "/app",
         "Entrypoint": [
-          "/app/src/run_model", {{ .input }}
+          "/app/src/run_model", {{ .request }}
         ],
         "Image": "dockerhub_username/image:v0.0.0"
       },

@@ -5,7 +5,7 @@ mkdir -p /outputs
 
 # Parse base64 input argument and decode to JSON
 echo "Raw input (base64): $1" >&2
-input_json=$(echo "$1" | base64 -d)
+request=$(echo "$1" | base64 -d)
 
 # Start the ollama server in the background
 echo "Starting Ollama server..." >&2
@@ -38,7 +38,6 @@ response=$(curl -s http://127.0.0.1:11434/api/chat \
     echo "=== Debug Info ==="
     date
     echo "Input (base64): $1"
-    echo "Decoded input: $input_json"
     echo "Request to Ollama: $request"
     echo "Response from Ollama:"
     echo "$response"
