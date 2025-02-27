@@ -22,7 +22,18 @@ Once your Docker image has been pushed to Docker Hub, you can run your module on
 ```sh
 export WEB3_PRIVATE_KEY=WEB3_PRIVATE_KEY
 
-lilypad run github.com/github_username/module_repo:v0.0.0 -i input=$(echo '{"prompt": "Which animal order do frogs belong to?", "system": "You are a helpful AI assistant", "temperature": "0.4"}' | base64 -w 0)
+lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
+  -i request="$(echo -n '{
+    "model": "MODEL_NAME:MODEL_VERSION",
+    "messages": [{
+      "role": "user",
+      "content": "what is the animal order of the frog?"
+    }],
+    "stream": false,
+    "options": {
+      "temperature": 0.8
+    }
+  }' | base64 -w 0)"
 ```
 
 ### Valid Parameters and Default Values
