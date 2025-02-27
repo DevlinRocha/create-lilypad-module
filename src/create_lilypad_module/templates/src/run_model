@@ -5,81 +5,7 @@ mkdir -p /outputs
 
 # Parse base64 input argument and decode to JSON
 echo "Raw input (base64): $1" >&2
-input_json=$(echo "$1" | base64 --d)
-
-# Parse arguments
-prompt=$(echo "$input_json" | sed -n 's/.*"prompt":[[:space:]]*"\([^"]*\)".*/\1/p')
-system=$(echo "$input_json" | sed -n 's/.*"system":[[:space:]]*"\([^"]*\)".*/\1/p')
-mirostat=$(echo "$input_json" | sed -n 's/.*"mirostat":[[:space:]]*"\([^"]*\)".*/\1/p')
-mirostat_eta=$(echo "$input_json" | sed -n 's/.*"mirostat_eta":[[:space:]]*"\([^"]*\)".*/\1/p')
-mirostat_tau=$(echo "$input_json" | sed -n 's/.*"mirostat_tau":[[:space:]]*"\([^"]*\)".*/\1/p')
-num_ctx=$(echo "$input_json" | sed -n 's/.*"num_ctx":[[:space:]]*"\([^"]*\)".*/\1/p')
-repeat_last_n=$(echo "$input_json" | sed -n 's/.*"repeat_last_n":[[:space:]]*"\([^"]*\)".*/\1/p')
-repeat_penalty=$(echo "$input_json" | sed -n 's/.*"repeat_penalty":[[:space:]]*"\([^"]*\)".*/\1/p')
-temperature=$(echo "$input_json" | sed -n 's/.*"temperature":[[:space:]]*"\([^"]*\)".*/\1/p')
-seed=$(echo "$input_json" | sed -n 's/.*"seed":[[:space:]]*"\([^"]*\)".*/\1/p')
-num_predict=$(echo "$input_json" | sed -n 's/.*"num_predict":[[:space:]]*"\([^"]*\)".*/\1/p')
-top_k=$(echo "$input_json" | sed -n 's/.*"top_k":[[:space:]]*"\([^"]*\)".*/\1/p')
-top_p=$(echo "$input_json" | sed -n 's/.*"top_p":[[:space:]]*"\([^"]*\)".*/\1/p')
-min_p=$(echo "$input_json" | sed -n 's/.*"min_p":[[:space:]]*"\([^"]*\)".*/\1/p')
-
-# Initialize default values
-mirostat=${mirostat:-"0"}
-mirostat_eta=${mirostat_eta:-"0.1"}
-mirostat_tau=${mirostat_tau:-"5.0"}
-num_ctx=${num_ctx:-"2048"}
-repeat_last_n=${repeat_last_n:-"64"}
-repeat_penalty=${repeat_penalty:-"1.1"}
-temperature=${temperature:-"0.8"}
-seed=${seed:-"0"}
-num_predict=${num_predict:-"-1"}
-top_k=${top_k:-"40"}
-top_p=${top_p:-"0.9"}
-min_p=${min_p:-"0.0"}
-
-if [[ -z "$prompt" ]]; then
-    echo "❌ Error: Prompt is required" >&2
-    exit 1
-fi
-
-echo "Prompt: $prompt" >&2
-
-# Prepare the messages array
-if [[ -z "$system" ]]; then
-    messages=(
-        "[{\"role\": \"user\", \"content\": \"$prompt\"}]"
-    )
-else
-    messages=(
-        "[{\"role\": \"system\", \"content\": \"$system\"},
-        {\"role\": \"user\", \"content\": \"$prompt\"}]"
-    )
-fi
-
-# Prepare the chat completion request
-request=$(
-    cat <<EOF
-{
-  "model": "$MODEL_ID",
-  "messages": $messages,
-  "stream": false,
-  "options": {
-    "mirostat": $mirostat,
-    "mirostat_eta": $mirostat_eta,
-    "mirostat_tau": $mirostat_tau,
-    "num_ctx": $num_ctx,
-    "repeat_last_n": $repeat_last_n,
-    "repeat_penalty": $repeat_penalty,
-    "temperature": $temperature,
-    "seed": $seed,
-    "num_predict": $num_predict,
-    "top_k": $top_k,
-    "top_p": $top_p,
-    "min_p": $min_p
-  }
-}
-EOF
-)
+input_json=$(echo "$1" | base64 -d)
 
 # Start the ollama server in the background
 echo "Starting Ollama server..." >&2
@@ -107,32 +33,12 @@ response=$(curl -s http://127.0.0.1:11434/api/chat \
     -H "Content-Type: application/json" \
     -d "$request")
 
-# Create JSON structure following OpenAI format
-escaped_response=$(echo "$response" | sed 's/"/\\"/g')
-formatted_response="{
-    'id': 'cmpl-$(openssl rand -hex 12)',
-    'object': 'text_completion',
-    'created': "$(date +%s)",
-    'model': '$MODEL_ID',
-    'choices': [{
-        'text': '$escaped_response',
-        'index': 0,
-        'logprobs': null,
-        'finish_reason': 'stop'
-    }],
-    'usage': {
-        'prompt_tokens': null,
-        'completion_tokens': null,
-        'total_tokens': null
-    }
-}"
-
 # Save debug info
 {
     echo "=== Debug Info ==="
     date
-    echo "System: $system"
-    echo "Input: $prompt"
+    echo "Input (base64): $1"
+    echo "Decoded input: $input_json"
     echo "Request to Ollama: $request"
     echo "Response from Ollama:"
     echo "$response"
