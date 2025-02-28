@@ -26,24 +26,26 @@ lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
   -i request="$(echo -n '{
     "model": "MODEL_NAME:MODEL_VERSION",
     "messages": [{
+      "role": "system",
+      "content": "you are a helpful AI assistant"
+    },
+    {
       "role": "user",
       "content": "what is the animal order of the frog?"
     }],
     "stream": false,
     "options": {
-      "temperature": 0.8
+      "temperature": 1.0
     }
   }' | base64 -w 0)"
 ```
 
-### Valid Parameters and Default Values
+### Valid Options Parameters and Default Values
 
-> \* === Required
+- [Ollama Modelfile](https://github.com/ollama/ollama/blob/main/docs/modelfile.md#valid-parameters-and-values)
 
 | Parameter      | Description                                                                                                                                                                                                                                                                                                                                                 | Default |
 | -------------- | ----------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------- | ------- |
-| prompt\*       | The content of the message sent from the user to the model.                                                                                                                                                                                                                                                                                                 | `""`    |
-| system         | The content of the message sent from the system to the model.                                                                                                                                                                                                                                                                                               | `""`    |
 | mirostat       | Enable Mirostat sampling for controlling perplexity. (0 = disabled, 1 = Mirostat, 2 = Mirostat 2.0)                                                                                                                                                                                                                                                         | `0`     |
 | mirostat_eta   | Influences how quickly the algorithm responds to feedback from the generated text. A lower learning rate will result in slower adjustments, while a higher learning rate will make the algorithm more responsive.                                                                                                                                           | `0.1`   |
 | mirostat_tau   | Controls the balance between coherence and diversity of the output. A lower value will result in more focused and coherent text.                                                                                                                                                                                                                            | `5`     |
@@ -52,7 +54,8 @@ lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
 | repeat_penalty | Sets how strongly to penalize repetitions. A higher value (e.g., 1.5) will penalize repetitions more strongly, while a lower value (e.g., 0.9) will be more lenient.                                                                                                                                                                                        | `1.1`   |
 | temperature    | The temperature of the model. Increasing the temperature will make the model answer more creatively.                                                                                                                                                                                                                                                        | `0.8`   |
 | seed           | Sets the random number seed to use for generation. Setting this to a specific number will make the model generate the same text for the same prompt.                                                                                                                                                                                                        | `0`     |
-| num_predict    | Maximum number of tokens to predict when generating text. (-1 = infinite generation)	                                                                                                                                                                                                                                                                       | `-1`    |
+| stop           | Sets the stop sequences to use. When this pattern is encountered the LLM will stop generating text and return. Multiple stop patterns may be set by specifying multiple separate stop parameters in a modelfile.                                                                                                                                            |         |
+| num_predict    | Maximum number of tokens to predict when generating text. (-1 = infinite generation)                                                                                                                                                                                                                                                                        | `-1`    |
 | top_k          | Reduces the probability of generating nonsense. A higher value (e.g. 100) will give more diverse answers, while a lower value (e.g. 10) will be more conservative.                                                                                                                                                                                          | `40`    |
 | top_p          | Works together with top-k. A higher value (e.g., 0.95) will lead to more diverse text, while a lower value (e.g., 0.5) will generate more focused and conservative text.                                                                                                                                                                                    | `0.9`   |
 | min_p          | Alternative to the top_p, and aims to ensure a balance of quality and variety. The parameter p represents the minimum probability for a token to be considered, relative to the probability of the most likely token. For example, with p=0.05 and the most likely token having a probability of 0.9, logits with a value less than 0.045 are filtered out. | `0.0`   |
