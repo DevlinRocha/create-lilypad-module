@@ -33,6 +33,24 @@ response=$(curl -s http://127.0.0.1:11434/api/chat \
     -H "Content-Type: application/json" \
     -d "$request")
 
+formatted_response="{
+    'id': 'cmpl-$(openssl rand -hex 12)',
+    'object': 'text_completion',
+    'created': "$(date +%s)",
+    'model': '$MODEL_ID',
+    'choices': [{
+        'text': '$escaped_response',
+        'index': 0,
+        'logprobs': null,
+        'finish_reason': 'stop'
+    }],
+    'usage': {
+        'prompt_tokens': null,
+        'completion_tokens': null,
+        'total_tokens': null
+    }
+}"
+
 # Save debug info
 {
     echo "=== Debug Info ==="
