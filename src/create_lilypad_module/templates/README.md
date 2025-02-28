@@ -17,27 +17,27 @@ Your module's ready! 🎉
 
 Once your Docker image has been pushed to Docker Hub, you can run your module on Lilypad Network.
 
-> Make sure that you Base64 encode your input.
+> Make sure that you Base64 encode your request.
 
 ```sh
 export WEB3_PRIVATE_KEY=WEB3_PRIVATE_KEY
 
 lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
-  -i request="$(echo -n '{
-    "model": "MODEL_NAME:MODEL_VERSION",
-    "messages": [{
-      "role": "system",
-      "content": "you are a helpful AI assistant"
-    },
-    {
-      "role": "user",
-      "content": "what is the animal order of the frog?"
-    }],
-    "stream": false,
-    "options": {
-      "temperature": 1.0
-    }
-  }' | base64 -w 0)"
+-i request="$(echo -n '{
+  "model": "MODEL_NAME:MODEL_VERSION",
+  "messages": [{
+    "role": "system",
+    "content": "you are a helpful AI assistant"
+  },
+  {
+  "role": "user",
+  "content": "what is the animal order of the frog?"
+  }],
+  "stream": false,
+  "options": {
+    "temperature": 1.0
+  }
+}' | base64 -w 0)"
 ```
 
 ### Valid Options Parameters and Default Values
