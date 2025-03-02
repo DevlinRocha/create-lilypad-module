@@ -66,8 +66,8 @@ In the project directory, you can run:
 
 ### [`scripts/configure`](scripts/configure)
 
-Configure your module.
-Set the following values in the [`.env` file](.env)
+Configures your module.
+Sets the following values in the [`.env` file](.env)
 
 ```
 MODEL_NAME
@@ -83,7 +83,7 @@ Builds the Docker image and pushes it to Docker Hub.
 
 ### `--major`, `--minor`, and `--patch` Flags
 
-Increment the specified version before building the Docker image.
+Increments the specified version before building the Docker image.
 
 #### `--local` Flag
 
@@ -91,7 +91,7 @@ Loads the built Docker image into the local Docker daemon.
 
 ### [`scripts/run`](scripts/run)
 
-Run your module.
+Runs your module.
 
 ## Learn More
 
