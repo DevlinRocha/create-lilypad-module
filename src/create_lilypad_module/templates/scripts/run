@@ -8,9 +8,11 @@ function request {
         printf "Enter your wallet private key: "
         read -r private_key
         WEB3_PRIVATE_KEY=$private_key
+        echo "Private key set"
+        echo "(Hint: Use 'export WEB3_PRIVATE_KEY=<PRIVATE_KEY>' to avoid this prompt in the future)"
     fi
     echo "Copy the JSON below to form your request:"
-    printf '
+    echo '
   "messages": [{
     "role": "system",
     "content": "you are a helpful AI assistant"
@@ -23,9 +25,9 @@ function request {
     "temperature": 1.0
   }
 '
-    printf "\n(Paste JSON as one line) ➔ "
+    printf "(Paste JSON as one line) ➔ "
     read -r request
-    request="{"model": $MODEL_NAME:$MODEL_VERSION, $request, "stream": false}"
+    request="{\"model\": \"$MODEL_NAME:$MODEL_VERSION\", $request, \"stream\": false}"
 }
 
 if [ $# -gt 2 ]; then
@@ -35,18 +37,23 @@ if [ $# -gt 2 ]; then
 elif [ $# -eq 0 ]; then
     request
 else
-    for arg in $@; do
-        if [ $# -eq 1 ] && ([ $1 == "--local" ] || [ $1 == "-l" ]); then
-            if [ $# -ne 2 ]; then
-                request
-            fi
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+        --local | -l)
             echo "Running the Lilypad module Docker image locally..."
             local=true
-            request=$2
-        else
+            shift
+            ;;
+        *)
             request=$1
-        fi
+            shift
+            ;;
+        esac
     done
+
+    if [[ -z $request ]]; then
+        request
+    fi
 fi
 
 # Base64 encode the request
@@ -58,6 +65,7 @@ if [ -z $local ]; then
     echo "Running $MODULE on Lilypad Network..."
     echo "Original request: $request"
     echo "Base64 encoded: $base64_request"
+    echo lilypad run $MODULE -i request=$base64_request --web3-private-key=$WEB3_PRIVATE_KEY
     lilypad run $MODULE -i request=$base64_request --web3-private-key=$WEB3_PRIVATE_KEY
 else
     MODULE=$DOCKER_IMAGE:$VERSION
