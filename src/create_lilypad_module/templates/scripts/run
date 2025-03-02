@@ -65,7 +65,6 @@ if [ -z $local ]; then
     echo "Running $MODULE on Lilypad Network..."
     echo "Original request: $request"
     echo "Base64 encoded: $base64_request"
-    echo lilypad run $MODULE -i request=$base64_request --web3-private-key=$WEB3_PRIVATE_KEY
     lilypad run $MODULE -i request=$base64_request --web3-private-key=$WEB3_PRIVATE_KEY
 else
     MODULE=$DOCKER_IMAGE:$VERSION
