@@ -13,7 +13,7 @@ if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ] || [ -z $DOCKER_IMAGE ]; then
 fi
 
 for arg in $@; do
-  if [ $arg == "--local" ]; then
+  if [ $1 == "--local" ] || [ $1 == "-l" ]; then
     echo "Building the Docker image and loading it into the local Docker daemon..."
     local=true
   fi
