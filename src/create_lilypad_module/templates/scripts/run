@@ -41,29 +41,28 @@ else
                 request
             fi
             echo "Running the Lilypad module Docker image locally..."
-            lcoal=true
-            REQUEST=$2
+            local=true
+            request=$2
         else
-            REQUEST=$1
+            request=$1
         fi
     done
 fi
 
 # Base64 encode the request
-BASE64_REQUEST=$(echo $full_request | base64 -w 0)
-echo $WEB3_PRIVATE_KEY
+base64_request=$(echo $request | base64 -w 0)
 
-if [ -z $lcoal ]; then
+if [ -z $local ]; then
     commit_hash=$(git log --pretty=format:%H | head -n 1)
     MODULE=$GITHUB_REPO:$commit_hash
     echo "Running $MODULE on Lilypad Network..."
     echo "Original request: $request"
-    echo "Base64 encoded: $BASE64_REQUEST"
-    lilypad run $MODULE -i request=$BASE64_REQUEST --web3-private-key=$WEB3_PRIVATE_KEY
+    echo "Base64 encoded: $base64_request"
+    lilypad run $MODULE -i request=$base64_request --web3-private-key=$WEB3_PRIVATE_KEY
 else
     MODULE=$DOCKER_IMAGE:$VERSION
     echo "Running $MODULE locally..."
     echo "Original request: $request"
-    echo "Base64 encoded: $BASE64_REQUEST"
-    docker run $MODULE $BASE64_REQUEST
+    echo "Base64 encoded: $base64_request"
+    docker run $MODULE $base64_request
 fi
