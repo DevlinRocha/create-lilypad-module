@@ -5,11 +5,10 @@
     "Spec": {
       "Deal": { "Concurrency": 1 },
       "Docker": {
-        "WorkingDirectory": "/app",
         "Entrypoint": [
-          "/app/src/run_model", {{ .input }}
+          "/app/src/run_model", {{ .request }}
         ],
-        "Image": "dockerhub_username/image:v0.0.0"
+        "Image": "dockerhub_username/image@"
       },
       "Engine": "Docker",
       "Network": { "Type": "None" },
