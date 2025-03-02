@@ -29,7 +29,7 @@ RUN mkdir -p ./outputs && chmod 777 ./outputs
 # Set outputs directory as a volume
 VOLUME ./outputs
 
-# Copy a source code and handle request
+# Copy source code and handle request
 COPY src ./src
 RUN chmod +x ./src/run_model
 
