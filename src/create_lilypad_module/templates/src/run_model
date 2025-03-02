@@ -3,8 +3,8 @@
 # Create output directory if it doesn't exist
 mkdir -p /outputs
 
-# Parse base64 input argument and decode to JSON
-echo "Raw input (base64): $1" >&2
+# Parse Base64 request argument and decode to JSON
+echo "Raw request (Base64): $1" >&2
 request=$(echo "$1" | base64 -d)
 
 # Start the ollama server in the background
@@ -55,7 +55,7 @@ formatted_response="{
 {
     echo "=== Debug Info ==="
     date
-    echo "Input (base64): $1"
+    echo "Request (Base64): $1"
     echo "Request to Ollama: $request"
     echo "Response from Ollama:"
     echo "$response"
