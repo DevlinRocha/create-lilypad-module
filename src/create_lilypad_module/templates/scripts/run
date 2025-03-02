@@ -1,39 +1,69 @@
 #!/usr/bin/env bash
 
-if [ $# -lt 1 ] || [ $# -gt 2 ]; then
-    echo "Usage: scripts/run [--local] <input>"
+CONFIG_FILE=".env"
+source $CONFIG_FILE
+
+function request {
+    if ! printenv | grep -q "WEB3_PRIVATE_KEY=."; then
+        printf "Enter your wallet private key: "
+        read -r private_key
+        WEB3_PRIVATE_KEY=$private_key
+    fi
+    echo "Copy the JSON below to form your request:"
+    printf '
+  "messages": [{
+    "role": "system",
+    "content": "you are a helpful AI assistant"
+  },
+  {
+    "role": "user",
+    "content": "what is the animal order of the frog?"
+  }],
+  "options": {
+    "temperature": 1.0
+  }
+'
+    printf "\n(Paste JSON as one line) ➔ "
+    read -r request
+    request="{"model": $MODEL_NAME:$MODEL_VERSION, $request, "stream": false}"
+}
+
+if [ $# -gt 2 ]; then
+    echo "Usage: scripts/run [--local] <request>"
     echo "Example: scripts/run 'What animal order do frogs belong to?'"
     exit 1
-fi
-
-if [ $1 == "--local" ] || [ $1 == "-l" ]; then
-    if [ $# -ne 2 ]; then
-        echo "❌ Error: Input is required."
-        echo "Example: scripts/run --local 'What animal order do frogs belong to?'"
-        exit 1
-    fi
-    echo "Running the Lilypad module Docker image locally..."
-    local=true
-    INPUT=$2
+elif [ $# -eq 0 ]; then
+    request
 else
-    INPUT=$1
+    for arg in $@; do
+        if [ $# -eq 1 ] && ([ $1 == "--local" ] || [ $1 == "-l" ]); then
+            if [ $# -ne 2 ]; then
+                request
+            fi
+            echo "Running the Lilypad module Docker image locally..."
+            lcoal=true
+            REQUEST=$2
+        else
+            REQUEST=$1
+        fi
+    done
 fi
 
-# Base64 encode the input
-JSON_INPUT="{"messages": [{"role": "user", "content": "$INPUT"}]}"
-BASE64_INPUT=$(echo $JSON_INPUT | base64)
-commit_hash=$(git log --pretty=format:%H | head -n 1)
+# Base64 encode the request
+BASE64_REQUEST=$(echo $full_request | base64 -w 0)
+echo $WEB3_PRIVATE_KEY
 
-if [ $local != true ]; then
+if [ -z $lcoal ]; then
+    commit_hash=$(git log --pretty=format:%H | head -n 1)
     MODULE=$GITHUB_REPO:$commit_hash
     echo "Running $MODULE on Lilypad Network..."
-    echo "Original input: $JSON_INPUT"
-    echo "Base64 encoded: $BASE64_INPUT"
-    lilypad run $MODULE -i prompt=$BASE64_INPUT
+    echo "Original request: $request"
+    echo "Base64 encoded: $BASE64_REQUEST"
+    lilypad run $MODULE -i request=$BASE64_REQUEST --web3-private-key=$WEB3_PRIVATE_KEY
 else
     MODULE=$DOCKER_IMAGE:$VERSION
     echo "Running $MODULE locally..."
-    echo "Original input: $JSON_INPUT"
-    echo "Base64 encoded: $BASE64_INPUT"
-    docker run $MODULE $BASE64_INPUT
+    echo "Original request: $request"
+    echo "Base64 encoded: $BASE64_REQUEST"
+    docker run $MODULE $BASE64_REQUEST
 fi
