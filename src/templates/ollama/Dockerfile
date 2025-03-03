@@ -1,4 +1,4 @@
-# Use the existing ollama Dockerfile as the base
+# Use the existing Ollama Docker image as the base
 FROM ollama/ollama
 
 # Set environment variables
