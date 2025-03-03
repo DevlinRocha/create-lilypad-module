@@ -33,5 +33,5 @@ project_name
 ├── .gitignore
 ├── Dockerfile
 ├── lilypad_module.json.tmpl
-├── README.md
+└── README.md
 ```
