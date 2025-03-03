@@ -3,7 +3,7 @@
   "version": "0.0.39",
   "description": "Create Lilypad modules with a modern Docker setup and minimal configuration.",
   "bin": {
-    "create-lilypad-module": "src/create_lilypad_module/scaffold"
+    "create-lilypad-module": "src/scaffold"
   },
   "repository": {
     "type": "git",
@@ -19,6 +19,6 @@
   ],
   "author": "Devlin Rocha",
   "files": [
-    "src/create_lilypad_module/templates"
+    "src/templates"
   ]
 }
