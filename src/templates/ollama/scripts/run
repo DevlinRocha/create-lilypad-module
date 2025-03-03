@@ -1,7 +1,21 @@
 #!/usr/bin/env bash
 
 CONFIG_FILE=".env"
+
+if [ ! -f $CONFIG_FILE ]; then
+    echo "Error: Configuration file '$CONFIG_FILE' not found."
+    echo "Run 'scripts/configure' to configure your module."
+    exit 1
+fi
+
 source $CONFIG_FILE
+
+if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ]; then
+    echo "Error: Configure your module first:"
+    echo "scripts/configure"
+    echo ".env"
+    exit 1
+fi
 
 function request {
     if ! printenv | grep -q "WEB3_PRIVATE_KEY=."; then
