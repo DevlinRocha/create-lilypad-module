@@ -31,7 +31,7 @@ echo "Ollama server started" >&2
 echo "Making request to Ollama..." >&2
 response=$(curl -s http://127.0.0.1:11434/api/chat \
     -H "Content-Type: application/json" \
-    -d $request)
+    -d "$request")
 
 formatted_response="{
     'id': 'cmpl-$(openssl rand -hex 12)',
