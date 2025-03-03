@@ -5,7 +5,7 @@ mkdir -p /outputs
 
 # Parse Base64 request argument and decode to JSON
 echo "Raw request (Base64): $1" >&2
-request=$(echo "$1" | base64 -d)
+request=$(echo $1 | base64 -d)
 
 # Start the ollama server in the background
 echo "Starting Ollama server..." >&2
@@ -31,7 +31,7 @@ echo "Ollama server started" >&2
 echo "Making request to Ollama..." >&2
 response=$(curl -s http://127.0.0.1:11434/api/chat \
     -H "Content-Type: application/json" \
-    -d "$request")
+    -d $request)
 
 formatted_response="{
     'id': 'cmpl-$(openssl rand -hex 12)',
@@ -58,9 +58,9 @@ formatted_response="{
     echo "Request (Base64): $1"
     echo "Request to Ollama: $request"
     echo "Response from Ollama:"
-    echo "$response"
+    echo $response
     echo "Formatted response:"
-    echo "$formatted_response"
+    echo $formatted_response
     echo "=== Server Status ==="
     echo "Ollama version: $(ollama --version)"
     echo "Model list: $(ollama list)"
@@ -68,9 +68,9 @@ formatted_response="{
 } >"/outputs/debug.log"
 
 # Save and output the raw Ollama response
-echo "$response" >"/outputs/response.json"
-echo "$response"
-echo "$formatted_response" >"/outputs/formatted_response.json"
-echo "$formatted_response"
+echo $response >"/outputs/response.json"
+echo $response
+echo $formatted_response >"/outputs/formatted_response.json"
+echo $formatted_response
 
 exit 0

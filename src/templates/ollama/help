@@ -4,7 +4,7 @@ COMMAND=$1
 shift
 
 if [ -f "scripts/$COMMAND" ]; then
-    "scripts/$COMMAND" "$@"
+    "scripts/$COMMAND" $@
 else
     echo "Available commands:"
     echo -e "\tscripts/configure                                        Configure the module"

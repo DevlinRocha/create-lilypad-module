@@ -51,7 +51,7 @@ ARCH=$(uname -m)
 os_arch="unsupported_arch"
 
 # Use a case statement to map architectures
-case "$ARCH" in
+case $ARCH in
 "arm64" | "aarch64")
   os_arch="arm64"
   ;;
