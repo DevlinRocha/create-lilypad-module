@@ -84,12 +84,17 @@ docker buildx build --build-arg MODEL_ID=$MODEL_ID --platform $platform \
   -t $DOCKER_HUB_REPO:$VERSION \
   ${local:+--load} ${local:---push} \
   ${no_cache:+--no-cache} \
-  .
+  . || exit 1
 
 if [ -z $local ]; then
+  index_digest=$(docker manifest inspect $DOCKER_HUB_REPO:$VERSION | jq -r '.manifests[] | select(.platform.architecture == "amd64" and .platform.os == "linux") | .digest')
   echo "✅ Docker image built and published to Docker Hub successfully."
-  echo -e "\thttps://hub.docker.com/repository/docker/$DOCKER_HUB_REPO/general"
-  echo -e "\n\tscripts/run"
+  echo "1.) Visit the URL to the new Docker image below and copy the index digest:"
+  echo -e "\t👉 https://hub.docker.com/repository/docker/$DOCKER_HUB_REPO/tags/$VERSION/$index_digest"
+  echo "2.) Update the Image field of the module template file:"
+  echo -e "\t👉 lilypad_module.json.tmpl"
+  echo "3.) Commit and push the changes to GitHub, then run the module:"
+  echo -e "\t👉 scripts/run"
   sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
 else
   echo "✅ Docker image built and loaded into local daemon successfully."
