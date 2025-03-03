@@ -1,0 +1,89 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE=".env"
+
+if [ ! -f $CONFIG_FILE ]; then
+    echo "Error: Configuration file '$CONFIG_FILE' not found."
+    echo "Run 'scripts/configure' to configure your module."
+    exit 1
+fi
+
+source $CONFIG_FILE
+
+if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ]; then
+    echo "Error: Configure your module first:"
+    echo "scripts/configure"
+    echo ".env"
+    exit 1
+fi
+
+function request {
+    if ! printenv | grep -q "WEB3_PRIVATE_KEY=."; then
+        printf "Enter your wallet private key: "
+        read -r private_key
+        WEB3_PRIVATE_KEY=$private_key
+        echo "Private key set"
+        echo "(Hint: Use 'export WEB3_PRIVATE_KEY=<PRIVATE_KEY>' to avoid this prompt in the future)"
+    fi
+    echo "Copy the JSON below to form your request:"
+    echo '
+  "messages": [{
+    "role": "system",
+    "content": "you are a helpful AI assistant"
+  },
+  {
+    "role": "user",
+    "content": "what is the animal order of the frog?"
+  }],
+  "options": {
+    "temperature": 1.0
+  }
+'
+    printf "(Paste JSON as one line) ➔ "
+    read -r request
+    request="{\"model\": \"$MODEL_NAME:$MODEL_VERSION\", $request, \"stream\": false}"
+}
+
+if [ $# -gt 2 ]; then
+    echo "Usage: scripts/run [--local] <request>"
+    echo "Example: scripts/run 'What animal order do frogs belong to?'"
+    exit 1
+elif [ $# -eq 0 ]; then
+    request
+else
+    while [[ $# -gt 0 ]]; do
+        case $1 in
+        --local | -l)
+            echo "Running the Lilypad module Docker image locally..."
+            local=true
+            shift
+            ;;
+        *)
+            request=$1
+            shift
+            ;;
+        esac
+    done
+
+    if [[ -z $request ]]; then
+        request
+    fi
+fi
+
+# Base64 encode the request
+base64_request=$(echo $request | base64 -w 0)
+
+if [ -z $local ]; then
+    commit_hash=$(git log --pretty=format:%H | head -n 1)
+    MODULE=$GITHUB_REPO:$commit_hash
+    echo "Running $MODULE on Lilypad Network..."
+    echo "Original request: $request"
+    echo "Base64 encoded: $base64_request"
+    lilypad run $MODULE -i request=$base64_request --web3-private-key=$WEB3_PRIVATE_KEY
+else
+    MODULE=$DOCKER_IMAGE:$VERSION
+    echo "Running $MODULE locally..."
+    echo "Original request: $request"
+    echo "Base64 encoded: $base64_request"
+    docker run $MODULE $base64_request
+fi

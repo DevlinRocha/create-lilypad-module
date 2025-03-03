@@ -1,0 +1,14 @@
+#!/usr/bin/env bash
+
+COMMAND=$1
+shift
+
+if [ -f "scripts/$COMMAND" ]; then
+    "scripts/$COMMAND" $@
+else
+    echo "Available commands:"
+    echo -e "\tscripts/configure                                        Configure the module"
+    echo -e "\tscripts/build [--local] [--major] [--minor] [--patch]    Build and push a new Docker image"
+    echo -e "\tscripts/run [--local] <request>                          Run the module"
+    exit 1
+fi
