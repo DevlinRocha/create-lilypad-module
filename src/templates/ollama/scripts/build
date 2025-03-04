@@ -62,14 +62,14 @@ esac
 
 platform="linux/amd64"
 
-if [ $local ]; then
+if [ -z $local ]; then
+  platform="linux/$os_arch"
+else
   if [ $os_arch == "unsupported_arch" ]; then
     echo "❌ Error: Unsupported local architecture detected."
     echo "⛔️ Run $(build) without the $(--local) flag to push the Docker image to Docker Hub for a supported platform."
     echo "👉 scripts/build"
     exit 1
-  else
-    platform="linux/$os_arch"
   fi
 fi
 
@@ -79,17 +79,17 @@ echo Building Docker image: $DOCKER_IMAGE...
 MODEL_ID=$MODEL_NAME:$MODEL_VERSION
 DOCKER_HUB_REPO=$DOCKER_HUB_USERNAME/$DOCKER_IMAGE
 
-if [ -n $local ]; then
+if [ -z $local ]; then
   tags=(
     -t $DOCKER_HUB_REPO:latest
     -t $DOCKER_HUB_REPO:$VERSION
-    --load
+    --push
   )
 else
   tags=(
     -t $DOCKER_IMAGE:latest
     -t $DOCKER_IMAGE:$VERSION
-    --push
+    --load
   )
 fi
 
