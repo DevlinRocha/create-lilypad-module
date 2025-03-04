@@ -76,13 +76,27 @@ fi
 echo Building Docker image: $DOCKER_IMAGE...
 
 # Build argument for model name and version
-MODEL_ID="${MODEL_NAME}:${MODEL_VERSION}"
-DOCKER_HUB_REPO="${DOCKER_HUB_USERNAME}/${DOCKER_IMAGE}"
+MODEL_ID=$MODEL_NAME:$MODEL_VERSION
+DOCKER_HUB_REPO=$DOCKER_HUB_USERNAME/$DOCKER_IMAGE
 
-docker buildx build --build-arg MODEL_ID=$MODEL_ID --platform $platform \
-  -t $DOCKER_HUB_REPO:latest \
-  -t $DOCKER_HUB_REPO:$VERSION \
-  ${local:+--load} ${local:---push} \
+if [ -n $local ]; then
+  tags=(
+    -t $DOCKER_HUB_REPO:latest
+    -t $DOCKER_HUB_REPO:$VERSION
+    --load
+  )
+else
+  tags=(
+    -t $DOCKER_IMAGE:latest
+    -t $DOCKER_IMAGE:$VERSION
+    --push
+  )
+fi
+
+docker buildx build \
+  --build-arg MODEL_ID=$MODEL_ID \
+  --platform $platform \
+  ${tags[@]} \
   ${no_cache:+--no-cache} \
   . || exit 1
 
