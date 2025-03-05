@@ -9,7 +9,7 @@ If you have questions or need help, please ask in [GitHub Discussions](https://g
 ## Quick Start
 
 ```sh
-create-lilypad-module project_name
+npx create-lilypad-module project_name
 cd project_name
 scripts/configure
 scripts/build
