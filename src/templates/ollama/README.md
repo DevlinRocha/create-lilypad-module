@@ -4,25 +4,30 @@ This project was bootstrapped with [Create Lilypad Module](https://github.com/De
 
 ## Prerequisites
 
-To build and run a module on Lilypad Network, you'll need to have the [Lilypad CLI](https://docs.lilypad.tech/lilypad/lilypad-testnet/install-run-requirements) and [Docker](https://www.docker.com/) on your machine, as well as [GitHub](https://github.com/) and [Docker Hub](https://hub.docker.com/) accounts.
+To build and run a module on Lilypad Network, you'll need to have the [Lilypad CLI](https://docs.lilypad.tech/lilypad/lilypad-testnet/install-run-requirements) and [Docker](https://www.docker.com/) installed on your machine, as well as [GitHub](https://github.com/) and [Docker Hub](https://hub.docker.com/) accounts.
 
 ## Getting Started
 
-> `create-lilypad-module` preconfigures Ollama modules for the [`/chat` API endpoint](https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion). If your module is intended to use a different endpoint:
+> `create-lilypad-module` preconfigures Ollama models for the [`/chat` API endpoint](https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion). If the model you're using is intended to use a different endpoint:
 > 1. Update the `curl` request in the [`/src/run_model`](src/run_model) file to point to the desired endpoint.
 > 2. If the new endpoint requires a different request format, modify the `request` argument specified in this `README` below and the `request` function in the [scripts/run](scripts/run) file.
 
-1. In your terminal, run `scripts/configure` and configure your module.
-2. In your terminal, run `scripts/build` and wait for the Docker image to be built and pushed to Docker Hub.
-3. Update "Image" field in [`lilypad_module.json.tmpl`](lilypad_module.json.tmpl).
-4. Create a new GitHub repository, then commit and push your changes.
-5. In your terminal, run `scripts/run` to run your module.
+Get a module up and running on Lilypad Network with 3 simple commands!
 
-Your module's ready! 🎉
+From the project directory run the following:
 
-Once your Docker image has been pushed to Docker Hub, you can run your module on Lilypad Network.
+1. `scripts/configure` configures the module.
+2. `scripts/build` builds and pushes the Docker image to Docker Hub. Depending on the size of the model you are using, expect this to take a while.
+    - Update "Image" field in [`lilypad_module.json.tmpl`](lilypad_module.json.tmpl).
+    - Commit and push your changes to a public GitHub repository.
+5. `scripts/run` runs the module.
+    - Enter a request to the module and wait for the response back.
 
-> Make sure that you Base64 encode your request.
+You've just built and ran a module on Lilypad Network! 🎉
+
+Once the Docker image has been pushed to Docker Hub, you can run the module on Lilypad Network.
+
+> When using the CLI, make sure that you Base64 encode your request (this is handled automatically when using `scripts/run`):
 
 ```sh
 export WEB3_PRIVATE_KEY=WEB3_PRIVATE_KEY
@@ -71,7 +76,7 @@ In the project directory, you can run:
 
 ### [`scripts/configure`](scripts/configure)
 
-Configures your module.
+Configures the module.
 Sets the following values in the [`.env` file](.env)
 
 ```
@@ -94,9 +99,13 @@ Increments the specified version before building the Docker image.
 
 Loads the built Docker image into the local Docker daemon.
 
-### [`scripts/run`](scripts/run)
+### [`scripts/run [--local]`](scripts/run)
 
-Runs your module.
+Runs the module.
+
+#### `--local` Flag
+
+Runs the local Docker image (requires the image be built locally).
 
 ## Learn More
 
