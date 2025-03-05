@@ -9,9 +9,7 @@ To build and run a module on Lilypad Network, you'll need to have the [Lilypad C
 ## Getting Started
 
 > `create-lilypad-module` preconfigures Ollama modules for the [`/chat` API endpoint](https://github.com/ollama/ollama/blob/main/docs/api.md#generate-a-chat-completion). If your module is intended to use a different endpoint:
-
 > 1. Update the `curl` request in the [`/src/run_model`](src/run_model) file to point to the desired endpoint.
-
 > 2. If the new endpoint requires a different request format, modify the `request` argument specified in this `README` below and the `request` function in the [scripts/run](scripts/run) file.
 
 1. In your terminal, run `scripts/configure` and configure your module.
