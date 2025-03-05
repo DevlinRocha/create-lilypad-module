@@ -20,12 +20,12 @@ From the project directory run the following:
 2. `scripts/build` builds and pushes the Docker image to Docker Hub. Depending on the size of the model you are using, expect this to take a while.
     - Update "Image" field in [`lilypad_module.json.tmpl`](lilypad_module.json.tmpl).
     - Commit and push your changes to a public GitHub repository.
-5. `scripts/run` runs the module.
+3. `scripts/run` runs the module.
     - Enter a request to the module and wait for the response back.
 
 You've just built and ran a module on Lilypad Network! 🎉
 
-Once the Docker image has been pushed to Docker Hub, you can run the module on Lilypad Network.
+Once the Docker image has been pushed to Docker Hub, you can run the module on Lilypad Network from any machine that has the Lilypad CLI installed:
 
 > When using the CLI, make sure that you Base64 encode your request (this is handled automatically when using `scripts/run`):
 
