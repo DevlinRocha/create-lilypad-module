@@ -16,6 +16,7 @@ To build and run a module on Lilypad Network, you'll need to have the [Lilypad C
 2. In your terminal, run `scripts/build` and wait for the Docker image to be built and pushed to Docker Hub.
 3. Update "Image" field in [`lilypad_module.json.tmpl`](lilypad_module.json.tmpl).
 4. Create a new GitHub repository, then commit and push your changes.
+5. In your terminal, run `scripts/run` to run your module.
 
 Your module's ready! 🎉
 
