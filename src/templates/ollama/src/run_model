@@ -29,28 +29,9 @@ echo "Ollama server started" >&2
 
 # Make the API call to Ollama's chat endpoint
 echo "Making request to Ollama..." >&2
-response=$(curl -s http://127.0.0.1:11434/api/chat \
+response=$(curl -s http://127.0.0.1:11434/api/chat/completions \
     -H "Content-Type: application/json" \
     -d "$request")
-
-# Create JSON structure following OpenAI format
-formatted_response="{
-    "id": "cmpl-$(openssl rand -hex 12)",
-    "object": "text_completion",
-    "created": "$(date +%s)",
-    "model": $MODEL_NAME:$MODEL_VERSION,
-    "choices": [{
-        "text": $request,
-        "index": 0,
-        "logprobs": null,
-        "finish_reason": "stop"
-    }],
-    "usage": {
-        "prompt_tokens": null,
-        "completion_tokens": null,
-        "total_tokens": null
-    }
-}"
 
 # Save debug info
 {
@@ -60,8 +41,6 @@ formatted_response="{
     echo "Request to Ollama: $request"
     echo "Response from Ollama:"
     echo $response
-    echo "Formatted response:"
-    echo $formatted_response
     echo "=== Server Status ==="
     echo "Ollama version: $(ollama --version)"
     echo "Model list: $(ollama list)"
@@ -71,7 +50,5 @@ formatted_response="{
 # Save and output the raw Ollama response
 echo $response >"/outputs/response.json"
 echo $response
-echo $formatted_response >"/outputs/formatted_response.json"
-echo $formatted_response
 
 exit 0
