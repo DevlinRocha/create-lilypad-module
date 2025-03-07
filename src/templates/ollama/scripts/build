@@ -13,7 +13,7 @@ if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ] || [ -z $DOCKER_IMAGE ]; then
 fi
 
 for arg in $@; do
-  if [ $1 == "--local" ] || [ $1 == "-l" ]; then
+  if [ $arg == "--local" ] || [ $arg == "-l" ]; then
     echo "Building the Docker image and loading it into the local Docker daemon..."
     local=true
   fi
@@ -67,7 +67,7 @@ if [ -z $local ]; then
 else
   if [ $os_arch == "unsupported_arch" ]; then
     echo "❌ Error: Unsupported local architecture detected."
-    echo "⛔️ Run $(build) without the $(--local) flag to push the Docker image to Docker Hub for a supported platform."
+    echo "⛔️ Build without the '--local' flag to push the Docker image to Docker Hub for a supported platform."
     echo "👉 scripts/build"
     exit 1
   fi
@@ -109,7 +109,11 @@ if [ -z $local ]; then
   echo -e "\t👉 lilypad_module.json.tmpl"
   echo "3.) Commit and push the changes to GitHub, then run the module:"
   echo -e "\t👉 scripts/run"
-  sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
+  if [[ $OSTYPE == "darwin"* ]]; then
+    sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
+  else
+    sed -i "s/^VERSION=.*/VERSION=$VERSION/" .env
+  fi
 else
   echo "✅ Docker image built and loaded into local daemon successfully."
   echo -e "\n\tscripts/run --local"
