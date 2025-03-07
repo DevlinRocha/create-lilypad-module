@@ -6,7 +6,7 @@ If something doesn’t work, please [file an issue](https://github.com/DevlinRoc
 
 If you have questions or need help, please ask in [GitHub Discussions](https://github.com/DevlinRocha/create-lilypad-module/discussions).
 
-## Quick Start
+## Getting Started
 
 ```sh
 npx create-lilypad-module project_name
