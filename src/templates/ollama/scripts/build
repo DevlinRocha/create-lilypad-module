@@ -62,9 +62,8 @@ esac
 
 platform="linux/amd64"
 
-if [ -z $local ]; then
+if [ $local ]; then
   platform="linux/$os_arch"
-else
   if [ $os_arch == "unsupported_arch" ]; then
     echo "❌ Error: Unsupported local architecture detected."
     echo "⛔️ Build without the '--local' flag to push the Docker image to Docker Hub for a supported platform."
