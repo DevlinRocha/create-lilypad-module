@@ -1,4 +1,4 @@
-# Getting Started with Create Lilypad Module
+# Lilypad x Ollama
 
 This project was bootstrapped with [Create Lilypad Module](https://github.com/DevlinRocha/create-lilypad-module).
 
@@ -43,7 +43,6 @@ lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
   "role": "user",
   "content": "what order do frogs belong to?"
   }],
-  "stream": false,
   "temperature": 0.6
 }' | base64 -w 0)"
 ```
