@@ -1,6 +1,6 @@
 {
   "name": "create-lilypad-module",
-  "version": "0.0.42",
+  "version": "0.0.43",
   "description": "Create Lilypad modules with a modern Docker setup and minimal configuration.",
   "bin": {
     "create-lilypad-module": "src/scaffold"
