@@ -91,7 +91,7 @@ GITHUB_REPO
 
 Builds the Docker image and pushes it to Docker Hub.
 
-### `--major`, `--minor`, and `--patch` Flags
+#### `--major`, `--minor`, and `--patch` Flags
 
 Increments the specified version before building the Docker image.
 
