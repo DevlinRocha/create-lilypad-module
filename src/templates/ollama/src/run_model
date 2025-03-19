@@ -29,7 +29,7 @@ echo "Ollama server started" >&2
 
 # Make the API call to Ollama's chat endpoint
 echo "Making request to Ollama..." >&2
-response=$(curl -s http://127.0.0.1:11434/api/chat/completions \
+response=$(curl -s http://127.0.0.1:11434/v1/chat/completions \
     -H "Content-Type: application/json" \
     -d "$request")
 
