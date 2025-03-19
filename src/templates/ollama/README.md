@@ -48,6 +48,11 @@ lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
 }' | base64 -w 0)"
 ```
 
+| Parameter  | Description                                                                 | Type     |
+| -----------| --------------------------------------------------------------------------- | -------- |
+| `model`    | Model ID used to generate the response (e.g. deepseek-r1:7b). **Required**. | `string` |
+| `messages` | A list of messages comprising the conversation so far. **Required**.        | `array`  |
+
 ### Optional Parameters and Default Values
 
 - [Create chat completion](https://platform.openai.com/docs/api-reference/chat/create)
