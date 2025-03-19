@@ -47,16 +47,16 @@ lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
 }' | base64 -w 0)"
 ```
 
-| Parameter  | Description                                                                 | Type     |
+| Field      | Description                                                                 | Type     |
 | -----------| --------------------------------------------------------------------------- | -------- |
 | `model`    | Model ID used to generate the response (e.g. deepseek-r1:7b). **Required**. | `string` |
 | `messages` | A list of messages comprising the conversation so far. **Required**.        | `array`  |
 
-### Optional Parameters and Default Values
+### Optional Fields and Default Values
 
 - [Create chat completion](https://platform.openai.com/docs/api-reference/chat/create)
 
-| Parameter           | Description | Default |
+| Field               | Description | Default |
 | ------------------- | ----------- | ------- |
 | `frequency_penalty` | Number between `-2.0` and `2.0`. Positive values penalize new tokens based on their existing frequency in the text so far, decreasing the model's likelihood to repeat the same line verbatim. | `0` |
 | `max_tokens`        | The maximum number of tokens that can be generated in the chat completion. | |
