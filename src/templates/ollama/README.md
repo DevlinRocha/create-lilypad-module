@@ -1,4 +1,4 @@
-# Lilypad x Ollama
+# Getting Started with Create Lilypad Module
 
 This project was bootstrapped with [Create Lilypad Module](https://github.com/DevlinRocha/create-lilypad-module).
 
