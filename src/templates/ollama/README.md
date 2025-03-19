@@ -68,6 +68,7 @@ lilypad run github.com/GITHUB_USERNAME/MODULE_REPO:TAG \
 | `stream_options`    | Options for streaming response. Only set this when you set `stream: true`. [Learn more](https://platform.openai.com/docs/api-reference/chat/create#chat-create-stream_options). | `null` |
 | `temperature`       | What sampling temperature to use, between `0` and `2`. Higher values like `0.8` will make the output more random, while lower values like `0.2` will make it more focused and deterministic. We recommend altering this or `top_p` but not both. | `1` |
 | `top_p`             | An alternative to sampling with `temperature`, called nucleus sampling, where the model considers the results of the tokens with `top_p` probability mass. So `0.1` means only the tokens comprising the top 10% probability mass are considered. We recommend altering this or `temperature` but not both. | `1` |
+| `tools`             | A list of tools the model may call. Currently, only functions are supported as a tool. Use this to provide a list of functions the model may generate JSON inputs for. A max of 128 functions are supported. [Learn more](https://platform.openai.com/docs/api-reference/chat/create#chat-create-tools). | |
 
 ## Available Scripts
 
