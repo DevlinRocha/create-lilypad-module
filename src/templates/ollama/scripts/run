@@ -33,11 +33,9 @@ function request {
   },
   {
     "role": "user",
-    "content": "what is the animal order of the frog?"
+    "content": "what order do frogs belong to?"
   }],
-  "options": {
-    "temperature": 1.0
-  }
+  "temperature": 0.6
 '
     printf "(Paste JSON as one line) ➔ "
     read -r request
@@ -46,7 +44,6 @@ function request {
 
 if [ $# -gt 2 ]; then
     echo "Usage: scripts/run [--local] <request>"
-    echo "Example: scripts/run 'What animal order do frogs belong to?'"
     exit 1
 elif [ $# -eq 0 ]; then
     request
