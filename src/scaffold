@@ -65,7 +65,7 @@ main() {
 
     options=("Ollama" "Hugging Face" "Exit")
 
-    PS3="Choose an option: "
+    PS3="Choose a template: "
 
     shopt -s nocasematch
 
