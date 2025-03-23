@@ -1,6 +1,13 @@
 #!/usr/bin/env bash
 
 CONFIG_FILE=".env"
+
+if [ ! -f $CONFIG_FILE ]; then
+  echo "Error: Configuration file '$CONFIG_FILE' not found."
+  echo "Run 'scripts/configure' to configure your module."
+  exit 1
+fi
+
 source $CONFIG_FILE
 
 VERSION=${VERSION:-v0.0.0}
@@ -109,8 +116,10 @@ if [ -z $local ]; then
   echo "3.) Commit and push the changes to GitHub, then run the module:"
   echo -e "\t👉 scripts/run"
   if [[ $OSTYPE == "darwin"* ]]; then
+    # macOS
     sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
   else
+    # Linux and others
     sed -i "s/^VERSION=.*/VERSION=$VERSION/" .env
   fi
 else
