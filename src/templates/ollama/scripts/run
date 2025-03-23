@@ -22,6 +22,7 @@ function request {
         printf "Enter your wallet private key: "
         read -rs private_key
         WEB3_PRIVATE_KEY=$private_key
+        echo "<SECRET>"
         echo "Private key set"
         echo "(Hint: Use 'export WEB3_PRIVATE_KEY=<PRIVATE_KEY>' to avoid this prompt in the future)"
     fi
