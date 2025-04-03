@@ -1,20 +1,21 @@
 {
-  "machine": { "gpu": 0, "vram": 0, "cpu": 6000, "ram": 6000 },
+  "machine": { "gpu": 1, "cpu": 8000, "ram": 16000 },
+  "gpus": [{ "vram": 24576 }]
   "job": {
     "APIVersion": "V1beta1",
     "Spec": {
       "Deal": { "Concurrency": 1 },
       "Docker": {
-        "WorkingDirectory": "/app",
         "Entrypoint": ["python", "/src/run_inference.py"],
         "EnvironmentVariables": ["INPUT={{ js .input }}"],
-        "Image": "dockerhub_username/image:tag"
+        "Image": "DOCKER_HUB_USERNAME/DOCKER_IMAGE@INDEX_DIGEST"
       },
       "Engine": "Docker",
       "Network": { "Type": "None" },
       "Outputs": [{ "Name": "outputs", "Path": "/outputs" }],
-      "Resources": { "GPU": "", "CPU": "1", "Memory": "2Gb" },
-      "Timeout": 600
+      "Resources": { "GPU": "1", "CPU": "8", "Memory": "16Gb" },
+      "Timeout": 1800,
+      "Verifier": "Noop"
     }
   }
 }
