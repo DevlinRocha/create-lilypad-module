@@ -1,0 +1,128 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE=".env"
+
+if [ ! -f $CONFIG_FILE ]; then
+  echo "Error: Configuration file '$CONFIG_FILE' not found."
+  echo "Run 'scripts/configure' to configure your module."
+  exit 1
+fi
+
+source $CONFIG_FILE
+
+VERSION=${VERSION:-v0.0.0}
+
+if [ -z $MODEL_NAME ] || [ -z $MODEL_VERSION ] || [ -z $DOCKER_IMAGE ]; then
+  echo "Error: Configure your module first:"
+  echo "scripts/configure"
+  echo ".env"
+  exit 1
+fi
+
+for arg in $@; do
+  if [ $arg == "--local" ] || [ $arg == "-l" ]; then
+    echo "Building the Docker image and loading it into the local Docker daemon..."
+    local=true
+  fi
+
+  if [ $arg == "--major" ] || [ $arg == "--minor" ] || [ $arg == "--patch" ]; then
+    SEMVER=${VERSION:1}
+    MAJOR=$(echo $SEMVER | cut -d. -f1)
+    MINOR=$(echo $SEMVER | cut -d. -f2)
+    PATCH=$(echo $SEMVER | cut -d. -f3)
+
+    if [ $arg == "--major" ]; then
+      MAJOR=$((MAJOR + 1))
+      MINOR=0
+      PATCH=0
+    elif [ $arg == "--minor" ]; then
+      MINOR=$((MINOR + 1))
+      PATCH=0
+    elif [ $arg == "--patch" ]; then
+      PATCH=$((PATCH + 1))
+    fi
+
+    VERSION="v$MAJOR.$MINOR.$PATCH"
+    echo "New version: $VERSION"
+  fi
+
+  if [ $arg == "--no-cache" ]; then
+    echo "Building the Docker image without using cache..."
+    no_cache=true
+  fi
+done
+
+ARCH=$(uname -m)
+
+# Initialize os_arch to a default value
+os_arch="unsupported_arch"
+
+# Use a case statement to map architectures
+case $ARCH in
+"arm64" | "aarch64")
+  os_arch="arm64"
+  ;;
+"x86_64" | "amd64")
+  os_arch="amd64"
+  ;;
+esac
+
+platform="linux/amd64"
+
+if [ $local ]; then
+  platform="linux/$os_arch"
+  if [ $os_arch == "unsupported_arch" ]; then
+    echo "❌ Error: Unsupported local architecture detected."
+    echo "⛔️ Build without the '--local' flag to push the Docker image to Docker Hub for a supported platform."
+    echo "👉 scripts/build"
+    exit 1
+  fi
+fi
+
+echo Building Docker image: $DOCKER_IMAGE...
+
+# Build argument for model name and version
+MODEL_ID=$MODEL_NAME:$MODEL_VERSION
+DOCKER_HUB_REPO=$DOCKER_HUB_USERNAME/$DOCKER_IMAGE
+
+if [ -z $local ]; then
+  tags=(
+    -t $DOCKER_HUB_REPO:latest
+    -t $DOCKER_HUB_REPO:$VERSION
+    --push
+  )
+else
+  tags=(
+    -t $DOCKER_IMAGE:latest
+    -t $DOCKER_IMAGE:$VERSION
+    --load
+  )
+fi
+
+docker buildx build \
+  --build-arg MODEL_ID=$MODEL_ID \
+  --platform $platform \
+  ${tags[@]} \
+  ${no_cache:+--no-cache} \
+  . || exit 1
+
+if [ -z $local ]; then
+  index_digest=$(docker manifest inspect $DOCKER_HUB_REPO:$VERSION | jq -r '.manifests[] | select(.platform.architecture == "amd64" and .platform.os == "linux") | .digest')
+  echo "✅ Docker image built and published to Docker Hub successfully."
+  echo "1.) Visit the URL to the new Docker image below and copy the index digest:"
+  echo -e "\t👉 https://hub.docker.com/repository/docker/$DOCKER_HUB_REPO/tags/$VERSION/$index_digest"
+  echo "2.) Update the Image field of the module template file:"
+  echo -e "\t👉 lilypad_module.json.tmpl"
+  echo "3.) Commit and push the changes to GitHub, then run the module:"
+  echo -e "\t👉 scripts/run"
+  if [[ $OSTYPE == "darwin"* ]]; then
+    # macOS
+    sed -i "" "s/^VERSION=.*/VERSION=$VERSION/" .env
+  else
+    # Linux and others
+    sed -i "s/^VERSION=.*/VERSION=$VERSION/" .env
+  fi
+else
+  echo "✅ Docker image built and loaded into local daemon successfully."
+  echo -e "\n\tscripts/run --local"
+fi

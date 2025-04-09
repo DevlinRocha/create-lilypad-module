@@ -1,0 +1,35 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.pyc
+*.pyo
+*.pyd
+*.so
+
+# Logs
+*.log
+
+# Virtual environments
+venv/
+.env/
+.env
+
+# Build artifacts
+build/
+dist/
+*.egg-info/
+
+# Models directories
+models/
+
+# Output directories
+outputs/
+
+# Testing / Linting artifacts
+.pytest_cache/
+.mypy_cache/
+.coverage
+
+# IDE / Editor configurations
+.idea/
+.vscode/
+*.swp

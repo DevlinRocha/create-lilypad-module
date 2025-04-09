@@ -1,0 +1,79 @@
+#!/usr/bin/env bash
+
+CONFIG_FILE=".env"
+source $CONFIG_FILE
+
+if [[ -z $MODEL_NAME ]]; then
+    printf "\nEnter the name of the model your module will use: "
+    read -r MODEL_NAME
+    MODEL_NAME=$MODEL_NAME
+else
+    printf "\nEnter the name of the model your module will use:"
+    printf "\n(Current: $MODEL_NAME) ➜ "
+    read -r NEW_MODEL_NAME
+    MODEL_NAME=${NEW_MODEL_NAME:-$MODEL_NAME}
+fi
+
+if [[ -z $MODEL_VERSION ]]; then
+    printf "\nEnter the version of the model your module will use: "
+    read -r MODEL_VERSION
+    MODEL_VERSION=$MODEL_VERSION
+else
+    printf "\nEnter the version of the model your module will use:"
+    printf "\n(Current: $MODEL_VERSION) ➜ "
+    read -r NEW_MODEL_VERSION
+    MODEL_VERSION=${NEW_MODEL_VERSION:-$MODEL_VERSION}
+fi
+
+if [[ -z $DOCKER_HUB_USERNAME ]]; then
+    printf "\nEnter your Docker Hub username: "
+    read -r DOCKER_HUB_USERNAME
+    DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME
+else
+    printf "\nEnter your Docker Hub username:"
+    printf "\n(Current: $DOCKER_HUB_USERNAME) ➜ "
+    read -r NEW_DOCKER_HUB_USERNAME
+    DOCKER_HUB_USERNAME=${NEW_DOCKER_HUB_USERNAME:-$DOCKER_HUB_USERNAME}
+fi
+
+if [[ -z $DOCKER_IMAGE ]]; then
+    if [ -n "$MODEL_NAME" ] && [ -n "$MODEL_VERSION" ]; then
+        printf "\nEnter the name of the Docker image:"
+        printf "\n(Default: $MODEL_NAME-$MODEL_VERSION) ➜ "
+        read -r DOCKER_IMAGE
+        DOCKER_IMAGE=${DOCKER_IMAGE:-$MODEL_NAME-$MODEL_VERSION}
+    else
+        printf "\nEnter the name of the Docker image: "
+        read -r DOCKER_IMAGE
+        DOCKER_IMAGE=$DOCKER_IMAGE
+    fi
+else
+    printf "\nEnter the name of the Docker image:"
+    printf "\n(Current: $DOCKER_IMAGE) ➜ "
+    read -r NEW_DOCKER_IMAGE
+    DOCKER_IMAGE=${NEW_DOCKER_IMAGE:-$DOCKER_IMAGE}
+fi
+
+if [[ -z $GITHUB_REPO ]]; then
+    printf "\nEnter the GitHub repository URL for the module:"
+    printf "\n(Example: github.com/github_username/module_repo) ➜ "
+    read -r GITHUB_REPO
+    GITHUB_REPO=$GITHUB_REPO
+else
+    printf "\nEnter the GitHub repository URL for the module: "
+    printf "\n(Current: $GITHUB_REPO) ➜ "
+    read -r NEW_GITHUB_REPO
+    GITHUB_REPO=${NEW_GITHUB_REPO:-$GITHUB_REPO}
+fi
+
+# Save Docker Hub username to config file
+cat <<EOF >$CONFIG_FILE
+MODEL_NAME=$MODEL_NAME
+MODEL_VERSION=$MODEL_VERSION
+DOCKER_HUB_USERNAME=$DOCKER_HUB_USERNAME
+DOCKER_IMAGE=$DOCKER_IMAGE
+GITHUB_REPO=$GITHUB_REPO
+VERSION=$VERSION
+EOF
+
+echo "✅ Configuration saved!"
